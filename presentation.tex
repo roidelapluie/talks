@@ -142,7 +142,7 @@
         \only<5>{\huge{\shadowtext{Hyperic}}}
         \only<6>{\huge{\shadowtext{BigBrother}}}
         \only<7>{\huge{\shadowtext{Munin}}}
-        \only<8>{\huge{\shadowtext{Zenon}}}
+        \only<8>{\huge{\shadowtext{Zenoss}}}
     \end{center}
 
 }
@@ -250,6 +250,20 @@
     \end{center}
     \end{huge}
 }
+\frame{%
+\frametitle{Example in puppet}
+    \begin{large}
+    \begin{itemize}
+        \xitem{Create a definition for your application}
+        \xitem{In that definition, add the configuration, the vhosts\ldots}
+        \xitem{Then export the monitoring (@@icinga\_service)}
+        \xitem{In bonus you can export DB configuration, etc\ldots}
+        \xitem{Use only the "meta" definition}
+        \xitem{Collect the exported ressources (Nagios\_service <||>)}
+    \end{itemize}
+    \end{large}
+
+}
 \section{Tools}
 \subsection{Collectd}
 \frame{%
@@ -318,7 +332,7 @@
         \xitem{Stats aggregation}
         \xitem{Simple counters}
         \xitem{Flushes every XX seconds to graphite}
-        \xitem{UDP}
+        \xitem{Text over UDP}
     \end{itemize}
     \end{LARGE}
 }
@@ -333,9 +347,10 @@
 \frametitle{Graphite}
     \begin{LARGE}
     \begin{itemize}
-        \xitem{Graphing}
+        \xitem{Graphing made simple}
         \xitem{A lot of helpers functions}
-        \xitem{Listen on UDP and TCP}
+        \xitem{Listening on UDP and TCP}
+        \xitem{Text over UDP/TCP}
     \end{itemize}
     \end{LARGE}
 }
@@ -439,9 +454,21 @@
         \xitem{Robust solutions}
         \xitem{Nice \& user-friendly output}
         \xitem{They play together}
-        \xitem{Plenty of other solutions I do not know}
     \end{itemize}
     \end{LARGE}
+}
+\frame{%
+\frametitle{Homework}
+    \begin{large}
+    \begin{itemize}
+        \xitem{Sensu}
+        \xitem{Riemann}
+        \xitem{Extremon}
+        \xitem{Esper}
+        \xitem{Skyline}
+        \xitem{Oculus}
+    \end{itemize}
+    \end{large}
 }
 \frame{%
 \frametitle{Try them yourself}
