@@ -18,21 +18,16 @@
 \begin{document}
 \setbeamercovered{invisible}
 
-\title[Monitoring at Cloud Scale]{\fontsize{25}{35}\selectfont Monitoring at Cloud Scale}
+\title[Testing your puppet code]{\fontsize{25}{35}\selectfont \shadowtext{Testing your puppet code}}
 
 \author[Julien Pivotto]{\shadowtext{Julien Pivotto}}
-\institute[Inuits]{\includegraphics[height=2cm]{files/inuitslogo.png}}
-\date{\shadowtext{Build a cloud Day Amsterdam}\\\inuits{June 13th, 2013}}
-\logo{\includegraphics[height=1cm]{files/bacd.png}}
+%\institute[Inuits]{Inuits}
+\date{\shadowtext{Libre Software Meeting 2013}\\\inuits{\today}}
+\logo{\includegraphics[height=1cm]{files/lsm2013.png}}
 
-\frame[plain]{\titlepage}
-
-\frame{%
-\frametitle{Table of contents}
-\tiny
-\tableofcontents
-}
-
+\frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
+\frame{\tableofcontents}
+\section{Introduction}
 \frame{%
     \begin{center}\begin{Huge}{\inuits{Julien Pivotto}}\end{Huge}\end{center}
     \begin{large}
@@ -44,439 +39,377 @@
     \end{itemize}
     \end{large}
 }
-\section{Introduction}
-\subsection{DevOps}
+
+\subsection{Automation}
 \frame{%
-    \frametitle{What is that DevOps stuff again?}
-    \begin{columns}[T]
-        \begin{column}{.5\textwidth}
-            \begin{LARGE}
-                \begin{itemize}
-                    \xitem{Culture}
-                    \xitem{\textit{(Lean)}}
-                    \xitem{Automation}
-                    \xitem{\color{inuits}{Measurement}}
-                    \xitem{Sharing}
-                \end{itemize}
-            \end{LARGE}
-        \end{column}
-        \begin{column}{.5\textwidth}
-            \includegraphics[height=3cm]{files/devops.png}
-            \vspace{1.5cm}
-            \begin{flushright}\textit{\inuits{Damon Edwards and John Willis}}\end{flushright}
-        \end{column}
-    \end{columns}
+\frametitle{Infrastructure as Code}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Keep your environments under SCM}
+        \xitem{Overview of complete environments}
+        \xitem{Reduce the deployment time}
+    \end{itemize}
+    \end{LARGE}
 }
-
-
-\subsection{monitoringsucks}
 \frame{%
-    \frametitle{\#monitoringsucks}
+\frametitle{Keep all environments the same}
+
+    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bobvietnam/4828291896/}}
+    \begin{center}
+        \includegraphics[height=6cm]{files/flickr_jumeaux.jpg}\\
+    \end{center}
+}
+\frame{%
+\frametitle{Packaging with FPM}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Ruby gem}
+        \xitem{package a directory (and much more)}
+        \xitem{Support~.deb,~.rpm}
+        \xitem{Package the code with several prefixes}
+        \xitem{/etc/puppet/environments/infradev}
+        \xitem{/etc/puppet/environments/uat}
+    \end{itemize}
+    \end{LARGE}
+}
+\subsection{Vagrant}
+\frame{%
+\frametitle{Vagrant}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Create virtual machines}
+        \xitem{Provision them}
+        \xitem{Destroy \& recreate}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Vagrant}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Chef, scripts, puppet, \ldots}
+        \xitem{Backend: Virtualbox, KVM, \ldots}
+        \xitem{A lot of baseboxes available}
+        \xitem{http://vagrantup.com}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Vagrant}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Local testing}
+        \xitem{The same environment as the target}
+    \end{itemize}
+    \end{LARGE}
+}
+\subsection{Puppet in a large scale}
+\frame{%
+\frametitle{Puppet environments}
     \begin{large}
     \begin{itemize}
-        \xitem{https://github.com/monitoringsucks}
-        \xitem{a movement to find a solution to monitoring}
-        \xitem{the feeling that monitoring is stucked in the past}
+        \xitem{Muliple environments}
+        \xitem{The same tree for all the environments}
+        \xitem{Pushing changes to UAT/prod on-demand}
+        \xitem{Small changes vs big releases}
     \end{itemize}
     \end{large}
 }
-
-\subsection{monitoringsucks}
 \frame{%
-    \frametitle{\#monitoringlove}
+\frametitle{Hiera}
+    \begin{itemize}
+        \xitem{Storing the data in Hiera(-gpg)}
+        \xitem{Usernames, password, IP addresses}
+        \xitem{Hiera is made to be structured}
+        \xitem{Using one hiera repo for all the environments}
+        \xitem{Using Hiera in your manifests, not in your modules}
+    \end{itemize}
+}
+\frame{%
+\frametitle{Hiera tree}
     \begin{LARGE}
     \begin{itemize}
-        \xitem{then it turned into \color{inuits}{\#monitoringlove}}
-        \xitem{relevant tools exist}
-        \xitem{they just need to be used}
-        \xitem{following the unix philosophy}
+        \xitem{\%\{environment\}/\%\{hostname\}}
+        \xitem{\%\{environment\}/common}
+        \xitem{infradev/www45.yaml}
+        \xitem{infradev/common.yaml}
     \end{itemize}
     \end{LARGE}
-    \begin{flushright}\textit{\inuits{we are going to explore some of them}}\end{flushright}
 }
-\section{Around monitoring}
-\subsection{The cloud}
+\subsection{Puppet code}
 \frame{%
-    \frametitle{What is different in the cloud?}
-    \begin{huge}
+\frametitle{Keeping clean puppet modules}
+    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/aurelie\_solenne/8340968061/}}
+    \begin{center}
+        \includegraphics[height=3cm]{files/flickr_rosette.jpg}\\
+    \end{center}
     \begin{itemize}
-        \xitem{Scale}
-        \xitem{Velocity}
-        \xitem{More changes, more often}
+        \xitem{Make them readable}
+        \xitem{Make them reusable and sharable}
+        \xitem{Don't puppetize everything}
+        \xitem{User generated content is not puppetized}
     \end{itemize}
-    \end{huge}
 }
 \frame{%
-    \frametitle{What do you need?}
-    \begin{huge}
+\frametitle{Use the right structure for your modules}
+    \begin{small}
     \begin{itemize}
-        \xitem{scalability}
-        \xitem{automation}
+        \xitem{Package, config, service}
+        \xitem{module::package, module::config, module::service}
+        \xitem{Parameterized classes}
     \end{itemize}
-    \end{huge}
+    \tiny{\color{inuits}http://www.slideshare.net/PuppetLabs/modern-module-development-ken-barber-2012-edinburgh-puppet-camp}
+    \end{small}
 }
-\subsection{The past}
-
 \frame{%
-    \frametitle{time for retirement}
-    \begin{huge}
+\frametitle{Distribution-agnostic puppet modules}
     \begin{itemize}
-        \xitem{forget all-in-one tools}
-        \xitem{forget auto-discovery tools}
-        \xitem{forget non-scalable tools}
-        \xitem{forget tools you can not automate}
+        \xitem{You don't have to support all the distros}
+        \xitem{Adding support for another distro should be easy}
     \end{itemize}
-    \end{huge}
+    \begin{block}
+    \tiny
+\texttt{~~\$config\_dir~=~\$configroot~?~\{}\\
+\texttt{~~~~undef~~~=>~\$::operatingsystem~?~\{}\\
+\texttt{~~~~~~/Debian|Ubuntu/~=>~'/etc/apache2',}\\
+\texttt{~~~~~~/CentOS|RedHat/~=>~'/etc/httpd',}\\
+\texttt{~~~~~~default~~~~~~~~~=>~'/etc/httpd',}\\
+\texttt{~~~~\},}\\
+\texttt{~~~~default~=>~\$configroot,}\\
+\texttt{~~\}}\\
+    \end{block}
 }
-
 \frame{%
-
-    \frametitle{forget about\ldots}
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/mourner/150844753/}}
+\frametitle{Puppet function}
+    \begin{itemize}
+        \xitem{The fail function prevents catalog to be applied}
+        \xitem{The notify function prints a warning}
+    \end{itemize}
+    \begin{block}
+    \tiny
+\texttt{if~(!\$leftsubnet)~and~(!\$leftsubnets)~\{}\\
+\texttt{~fail('\$leftsubnets~and~\$leftsubnet~both~empty')}\\
+\texttt{\}}\\
+    \end{block}
+}
+\section{Testing tools}
+\subsection{Style and linting}
+\frame{%
+\frametitle{Puppet parser}
+    \begin{itemize}
+        \xitem{Included in puppet}
+        \xitem{Validating the syntax}
+        \xitem{\texttt{puppet parser validate init.pp}}
+        \item{\texttt{find~. -name '*.pp' -exec puppet parser validate + ;}}
+    \end{itemize}
+}
+\frame{%
+\frametitle{Puppet lint}
+    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/voyages-provence/8127668094/}}
     \begin{center}
-        \includegraphics[height=5cm]{files/flickr_graveyard.jpg}\\
-        \only<1>{\huge{\shadowtext{Zabbix}}}
-        \only<2>{\huge{\shadowtext{Centreon}}}
-        \only<3>{\huge{\shadowtext{GroundWork}}}
-        \only<4>{\huge{\shadowtext{Cacti}}}
-        \only<5>{\huge{\shadowtext{Hyperic}}}
-        \only<6>{\huge{\shadowtext{BigBrother}}}
-        \only<7>{\huge{\shadowtext{Munin}}}
-        \only<8>{\huge{\shadowtext{Zenoss}}}
+        \includegraphics[height=4cm]{files/ecriture.jpg}\\
     \end{center}
-
+    \begin{itemize}
+        \xitem{Follow the puppet style guide}
+        \xitem{Two-space soft tab}
+        \xitem{align fat comma arrows (=>) within blocks of attributes}
+        \xitem{http://docs.puppetlabs.com/guides/style\_guide.html}
+    \end{itemize}
 }
-
-\subsection{Environment}
+\subsection{Catalogs}
 \frame{%
-    \frametitle{Your infrastructure today}
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bjbrake/235217140/}}
-    \begin{center}
-        \includegraphics[height=6cm]{files/flickr_rack.jpg}
-    \end{center}
-}
-\frame{%
-    \frametitle{Your infrastructure tomorrow}
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bjbrake/235217140/}}
-    \begin{center}
-        \includegraphics[height=6cm]{files/flickr_rack.jpg}
-        \includegraphics[height=6cm]{files/flickr_rack.jpg}
-    \end{center}
-}
-\frame{%
-    \frametitle{Your infrastructure in 6 months}
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bjbrake/235217140/}}
-    \begin{center}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}\\
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}\\
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}\\
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-        \includegraphics[height=1.5cm]{files/flickr_rack.jpg}
-    \end{center}
-}
-
-\subsection{Challenges}
-\frame{%
-\frametitle{Challenges}
+\frametitle{Cucumber puppet}
     \begin{LARGE}
     \begin{itemize}
+        \xitem{Write scenarios}
+        \xitem{Easy to read (full sentences)}
+        \xitem{Use your manifests}
+        \xitem{Need some tricks to work with Puppet 3}
+        \xitem{Discontinued}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Cucumber example}
+\begin{block}{Cucumber}
+\tiny
+\texttt{Feature:~General~catalog~policy}\\
+\texttt{~~In~order~to~ensure~applicability~of~a~host's~catalog}\\
+\texttt{~~As~a~manifest~developer}\\
+\texttt{~~I~want~all~catalogs~to~obey~some~general~rules}\\
+\texttt{}\\
+\texttt{~~Scenario~Outline:~Compile~and~verify~catalog}\\
+\texttt{~~~~Given~a~node~specified~by~"features/yaml/<hostname>."}\\
+\texttt{~~~~When~I~compile~its~catalog}\\
+\texttt{~~~~Then~compilation~should~succeed}\\
+\texttt{~~~~And~all~resource~dependencies~should~resolve}\\
+\texttt{}\\
+\texttt{~~~~Examples:}\\
+\texttt{~~~~~~|~hostname~~|}\\
+\texttt{~~~~~~|~localhost~|}
+\end{block}
+}
+
+\frame{%
+\frametitle{rspec-puppet}
+    \begin{large}
+    \begin{itemize}
+        \xitem{Check what is the behaviour of puppet}
+        \xitem{Separate tests per modules}
+        \xitem{Add context, facts, \ldots}
+        \xitem{Test custom functions, hosts, manifests, \ldots}
+    \end{itemize}
+    \end{large}
+}
+\subsection{rspec-puppet}
+\frame{%
+\frametitle{rspec-puppet}
+\begin{block}{Start with rspec puppet}
+\tiny
+\texttt{gem install rspec-puppet}\\
+\texttt{gem install puppet}\\
+\texttt{cd my-module}\\
+\texttt{rspec-puppet-init}
+\end{block}
+}
+\frame{%
+\frametitle{rspec-puppet}
+\begin{block}{spec/defines/connection\_spec.rb}
+\tiny
+\texttt{require~'spec\_helper'}\\
+\texttt{describe~'openswan::connection'~do}\\
+\texttt{~~describe~'should~require~rightsubnet~or~rightsubnets'~do}\\
+\texttt{~~~~let(:title)~\{~'foobar'~\}}\\
+\texttt{~~~~let~(:params)~\{~\{}\\
+\texttt{~~~~~~:ike~~~~~~~~~=>~'aes256-sha1;modp1024',}\\
+\texttt{~~~~~~:esp~~~~~~~~~=>~'aes256-sha1;modp1024',}\\
+\texttt{~~~~~~:leftsubnet~=>~'8.8.5.5',}\\
+\texttt{~~~~~~:right~~~~~~~=>~'84.54.105.5',}\\
+\texttt{~~~~~~:left~~~~~~~~=>~'68.65.98.6',}\\
+\texttt{~~~~~~:foreignip~~~=>~'45.25.5.5',}\\
+\texttt{~~~~~~:localtestip~=>~'82.8.8.8',~\}~\}}\\
+\texttt{~~~~~~it~do}\\
+\texttt{~~~~~~~~expect~\{}\\
+\texttt{~~~~~~~~~~should~contain\_file("/etc/ipsec.d/foobar.conf")}\\
+\texttt{~~~~~~~~\}.to~raise\_error(Puppet::Error,~/\$rightsubnets~and~\$rightsubnet~cannot~be~both~empty/)}\\
+\texttt{~~~~~~end}\\
+\texttt{~~end}\\
+\texttt{end}
+\end{block}
+}
+\frame{%
+\frametitle{rspec-puppet}
+\begin{block}{Second example}
+\tiny
+\texttt{require~'spec\_helper'}\\
+\texttt{describe~'apache',~:type~=>~:class~do}\\
+\texttt{~~let~(:facts)~\{~\{}\\
+\texttt{~~~~:operatingsystem~=>~'CentOS',}\\
+\texttt{~~~~:osfamily~=>~'RedHat',}\\
+\texttt{~~\}~\}}\\
+\texttt{~~describe~'without~parameters'~do}\\
+\texttt{~~~~it~\{~should~create\_class('apache')~\}}\\
+\texttt{~~~~it~\{~should~include\_class('apache::service')~\}}\\
+\texttt{~~~~it~\{~should~contain\_apache\_\_listen('80')~\}}\\
+\texttt{~~~~it~\{~should~contain\_apache\_\_namevhost('80')~\}}\\
+\texttt{~~end}\\
+\texttt{end}
+\end{block}
+}
+\frame{%
+\frametitle{rspec-puppet}
+    \begin{large}
+    \begin{itemize}
+        \xitem{should, should\_not}
+        \xitem{should contain\_package}
+        \xitem{contain\_foo\_\_bar('baz') (for foo::bar)}
+    \end{itemize}
+    \end{large}
+}
+\section{Jenkins}
+\frame{%
+\frametitle{Integration with jenkins}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Pulling, testing and deployments}
+        \xitem{Push-Test-Package-Deploy}
+        \xitem{Continuous integration}
+        \xitem{Continuous delivery}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Jenkins pipelines}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Build pipelines}
+        \xitem{Overview of what happens}
+        \xitem{Getting notified about what failed}
+        \xitem{Promoted build plugin}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Jenkins pipelines}
+    \begin{center}
+        \includegraphics[height=6cm]{files/jenkins1.png}\\
+    \end{center}
+}
+\frame{%
+\frametitle{Advantages of CI}
+    \begin{center}
+        \includegraphics[height=4cm]{files/jenkins2.png}\\
+    \end{center}
+    \begin{itemize}
+        \xitem{You trust your code}
         \xitem{Reproducability}
-        \xitem{Speed}
-        \xitem{Metrics}
-        \xitem{Orchestration}
+        \xitem{You get metrics: number of warning, \ldots}
+        \xitem{You have a backlog}
+        \xitem{It is easy!}
     \end{itemize}
-    \end{LARGE}
 }
 \frame{%
-\frametitle{WANTED}
-
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/pagedooley/3124443099/}}
-    \begin{center}
-        \includegraphics[height=4cm]{files/flickr_wanted.jpg}\\
-    \begin{large}
-    \begin{itemize}
-        \xitem{Small tools}
-        \xitem{Collect / Mangle}
-        \xitem{Analyse / Act}
-        \xitem{Visualize}
-    \end{itemize}
-    \end{large}
-    \end{center}
-}
-\frame{%
-\frametitle{WANTED}
-
-\begin{center}\Huge{\shadowtext{The {\color{inuits}UNIX} philosophy}}\end{center}
-}
-\subsection{Infrastructure as code}
-\frame{%
-\frametitle{Automation}
-
+\frametitle{Promotions}
     \begin{LARGE}
     \begin{itemize}
-        \xitem{One source of trust: puppet, chef, \ldots}
-        \xitem{Exported resource}
-        \xitem{Monitor in the same location you deploy}
-        \xitem{Infrastructure-as-Code}
-        \xitem{\color{inuits}no autodiscovery tools}
+        \xitem{Provides buttons you can click}
+        \xitem{Trigger actions}
+        \xitem{deploy to other environments}
+        \xitem{Get a mail with the changes}
+        \xitem{Have a log of who deployed}
     \end{itemize}
     \end{LARGE}
 }
 \frame{%
-\frametitle{Automation}
-
-    \begin{huge}
+\frametitle{Promotions}
     \begin{center}
-        \shadowtext{If it is not automated || not monitored}\\\shadowtext{then it does not exist!}
+        \includegraphics[height=6cm]{files/jenkins3.png}\\
     \end{center}
-    \end{huge}
-}
-\frame{%
-\frametitle{Example in puppet}
-    \begin{large}
-    \begin{itemize}
-        \xitem{Create a definition for your application}
-        \xitem{In that definition, add the configuration, the vhosts\ldots}
-        \xitem{Then export the monitoring (@@icinga\_service)}
-        \xitem{In bonus you can export DB configuration, etc\ldots}
-        \xitem{Use only the "meta" definition}
-        \xitem{Collect the exported ressources (Nagios\_service <||>)}
-    \end{itemize}
-    \end{large}
-
-}
-\section{Tools}
-\subsection{Collectd}
-\frame{%
-\frametitle{Collectd}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Statistics collection daemon}
-        \xitem{{\color{inuits}A lot} of plugins available\ldots}
-        \xitem{Can send data to graphite}
-        \xitem{Simple configuration}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Collectd plugins}
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/juhansonin/3141561416/}}
-    \begin{center}
-        \includegraphics[height=4cm]{files/flickr_plugins.jpg}
-    \end{center}
-}
-\frame{%
-\frametitle{Collectd plugins}
-\begin{small}
-\begin{center}
-\shadowtext{AMQP Apache APC\_UPS Apple\_Sensors Ascent Battery BIND Carbon}\\
-\shadowtext{ConnTrack ContextSwitch CPU CPUFreq CSV cURL cURL-JSON cURL-XML}\\
-\shadowtext{DBI DF Disk DNS E-Mail Entropy Exec FileCount FSCache GenericJMX}\\
-\shadowtext{gmond HDDTemp Interface IPMI IPTables IPVS IRQ Java libvirt Load}\\
-\shadowtext{LogFile LPAR MadWifi MBMon memcachec memcached Memory Modbus}\\
-\shadowtext{Monitorus Multimeter MySQL NetApp Netlink Network NFS nginx}\\
-\shadowtext{Notify\_Desktop Notify\_Email NTPd NUT olsrd OneWire OpenVPN OpenVZ}\\
-\shadowtext{Oracle Perl Pinba Ping PostgreSQL PowerDNS Processes Protocols Python}\\
-\shadowtext{Redis RouterOS RRDCacheD RRDtool Sensors Serial SNMP Swap SysLog}\\
-\shadowtext{Table Tail Tape TCPConns TeamSpeak2 TED thermal TokyoTyrant UnixSock}\\
-\shadowtext{Uptime Users UUID Varnish vmem VServer Wireless XMMS}\\
-\shadowtext{Write\_Graphite Write\_HTTP Write\_MongoDB}\\
-\shadowtext{Write\_Redis Write\_Riemann ZFS\_ARC}
-\end{center}
-\end{small}
-}
-\subsection{Logstash}
-\frame{%
-\frametitle{Logstash}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Ship logs from any source}
-        \xitem{Filter them}
-        \xitem{Index them}
-        \xitem{Search them}
-        \xitem{Backed with elasticsearch}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Kibana}
-    \flushright{\tiny{\color{darkgrey}http://kibana.org/images/screenshots/searchss.png}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/kibana.png}
-    \end{center}
-}
-\subsection{Statsd}
-\frame{%
-\frametitle{Statsd}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Stats aggregation}
-        \xitem{Simple counters}
-        \xitem{Flushes every XX seconds to graphite}
-        \xitem{Text over UDP}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Statsd}
-    \begin{center}
-        \small{\shadowtext{echo "stats.sshd.login:1|c" | nc -u statsd.example.com 8125}}
-    \end{center}
-}
-\subsection{Graphite}
-\frame{%
-\frametitle{Graphite}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Graphing made simple}
-        \xitem{A lot of helpers functions}
-        \xitem{Listening on UDP and TCP}
-        \xitem{Text over UDP/TCP}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Send data to graphite}
-        \small{\shadowtext{echo "stats.sshd.login 1 \$(date +\%s)" | nc -u graphite.example.com 2003}}
-}
-\frame{%
-\frametitle{Graphite API}
-    \begin{center}
-    \includegraphics[height=5cm]{files/graphite-api.png}
-    \end{center}
-
-}
-
-\frame{%
-\frametitle{gdash}
-
-    \flushright{\tiny{\color{darkgrey}https://github.com/ripienaar/gdash}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/gdash.png}
-    \end{center}
-
-}
-\subsection{Icinga}
-\frame{%
-\frametitle{Icinga}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Fork of nagios}
-        \xitem{Large and vibrant community}
-        \xitem{Configuration compatible with nagios}
-        \xitem{User-friendly interface}
-        \xitem{\color{inuits}Use Icinga Classic!}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Icinga}
-    \flushright{\tiny{\color{darkgrey}https://icinga.org}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/Icinga_Classic_ServiceStatus.png}
-    \end{center}
-
 }
 \section{Conclusion}
-\subsection{They work together}
-\frame{%
-\frametitle{Toolchain from apache to nagios}
-    \begin{large}
-    \begin{itemize}
-        \xitem{Apache ships logs to rsyslog}
-        \xitem{Rsyslog ships logs to logstash}
-        \xitem{Logstash ships metrics to statsd}
-        \xitem{Statsd ships metrics to Graphite}
-        \xitem{Icinga query metric from graphite}
-        \xitem{https://github.com/etsy/nagios\_tools}
-    \end{itemize}
-    \end{large}
-}
-\frame{%
-\frametitle{Reusing Icinga/Nagios perfdata}
-    \begin{large}
-    \begin{itemize}
-        \xitem{Icinga performs various checks}
-        \xitem{Icinga sends perfdata to graphite}
-        \xitem{Graphite stores the data}
-        \xitem{Gdash serves them inside dashboards}
-        \xitem{https://github.com/roidelapluie/icinga-to-graphite}
-    \end{itemize}
-    \end{large}
-}
-\subsection{Sharing}
-\frame{%
-\frametitle{The metrics}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Everything can become a metric}
-        \xitem{Performance metrics}
-        \xitem{Usage metrics}
-        \xitem{Business-valuable metrics}
-        \xitem{People metrics}
-        \xitem{Metrics are knowledge}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Metrics that matter}
-    \flushright{\tiny{\color{darkgrey}http://codeascraft.com/2011/02/15/measure-anything-measure-everything/}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/coffee.png}
-    \end{center}
-}
-\subsection{There are solutions}
-\frame{%
-\frametitle{What have we seen?}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{We have seen only open-source software}
-        \xitem{Small, pluggable daemons}
-        \xitem{Robust solutions}
-        \xitem{Nice \& user-friendly output}
-        \xitem{They play together}
-    \end{itemize}
-    \end{LARGE}
-}
+\subsection{Homework}
 \frame{%
 \frametitle{Homework}
-    \begin{large}
+    \begin{LARGE}
     \begin{itemize}
-        \xitem{Sensu}
-        \xitem{Riemann}
-        \xitem{dashing}
-        \xitem{ExtreMon}
-        \xitem{Esper}
-        \xitem{Skyline}
-        \xitem{Oculus}
+        \xitem{Integrating tests with git hooks}
+        \xitem{Integrating tests with VI}
+        \xitem{github.com/philandstuff/fizzgig}
     \end{itemize}
-    \end{large}
+    \end{LARGE}
 }
+\subsection{Conclusion}
 \frame{%
-\frametitle{Try them yourself}
-    \begin{large}
-    \shadowtext{https://github.com/KrisBuytaert/vagrant-graphite}\\
-    \shadowtext{https://github.com/KrisBuytaert/vagrant-puppet-logstash}
-    \end{large}
+\frametitle{Conclusion}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Use nice \& simple Puppet modules}
+        \xitem{Continuous integration}
+        \xitem{Multiple environments}
+        \xitem{Readability \& reusability}
+        \xitem{Tools exist and work together}
+    \end{itemize}
+    \end{LARGE}
 }
 \frame{%
 \frametitle{Contact}
@@ -502,9 +435,6 @@
         \end{column}
         \end{columns}
 }
-
-
-
 
 
 
