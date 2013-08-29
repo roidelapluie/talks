@@ -25,7 +25,7 @@
 \author[Julien Pivotto]{\shadowtext{Julien Pivotto}}
 %\institute[Inuits]{Inuits}
 \date{\shadowtext{Techies Teach Techies}\\\inuits{September 2, 2013}}
-\logo{\includegraphics[height=2cm]{files/logstash.png}}
+\logo{\includegraphics[height=2cm]{files/logstash2.png}}
 
 \frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
 \frame{\tableofcontents}
@@ -61,86 +61,354 @@
 %        \includegraphics[height=6cm]{files/flickr_jumeaux.jpg}\\
 %    \end{center}
 %}
-\subsection{Traditional logging}
+
+\frame{%
+\frametitle{Logging}
+\begin{itemize}
+\xitem{Recording of events}
+\xitem{Voice of your systems and applications}
+\xitem{It tells you almose everything}
+\xitem{It is a source of knowledge}
+\end{itemize}
+}
+\frame{%
+\frametitle{Logging is useful}
+\begin{itemize}
+\xitem{Understanding outages}\pause
+\xitem{not only when it's wrong}
+\xitem{you can extract metrics}
+\xitem{no logs means something}
+\xitem{it tells you what, why, who, when}
+\end{itemize}
+}
+\frame{%
+\frametitle{Logging in the wild}
+\begin{itemize}
+\xitem{Syslog}
+\xitem{\texttt{|tee /var/log/myapp.log}}
+\xitem{Cron + \texttt{MAILTO=}}
+\xitem{\texttt{\&>/dev/null}}
+\end{itemize}
+}
 \frame{%
 \frametitle{Logging in the past}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Each app writes to a single log file}
-        \xitem{A lot of log files}
-        \xitem{Grep is your friend, tail -f too}
-        \xitem{Each app has its format}
-        \xitem{No filtering possible on these logs}
-    \end{itemize}
-    \end{LARGE}
+\begin{itemize}
+\xitem{Logging to files on each server}
+\xitem{Using syslog protocol}
+\xitem{Decentralized}
+\xitem{Reading requires SSH access}
+\xitem{Not developer friendly}
+\end{itemize}
 }
 \frame{%
-\frametitle{Syslog}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{A protocol}
-        \xitem{Separate code and logging}
-        \xitem{Several facilities: kern, user, mail\ldots}
-        \xitem{Several severities: debug, warning, errors\ldots}
-        \xitem{Only 7 custom facilities}
-    \end{itemize}
-    \end{LARGE}
+\frametitle{The tools nowadays}
+\begin{itemize}
+\xitem{Jenkins, Icinga, Graphite, Foreman}
+\xitem{Nice web interfaces}
+\xitem{Centralized}
+\xitem{Easy to use}
+\end{itemize}
 }
 \frame{%
-\frametitle{Syslog-ng and rsyslog}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Implementation of syslog}
-        \xitem{Limited by the protocol}
-        \xitem{Shipped config depends on the distro}
-        \xitem{/var/log/secure vs /var/log/auth.log}
-    \end{itemize}
-    \end{LARGE}
-}
-\subsection{Logging issues}
-\frame{%
-\frametitle{Issues}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Grepping a 5G file}
-        \xitem{No space left on the device}
-        \xitem{OS crashed, no access to logs}
-        \xitem{Wait.. in which file is it?}
-    \end{itemize}
-    \end{LARGE}
+\frametitle{Requirements}
+\begin{itemize}
+\xitem{Scalable tools}
+\xitem{Configured by text files}
+\xitem{Playing with existing tools}
+\xitem{Scalable}
+\xitem{Following the Unix philosophy}
+\end{itemize}
 }
 \frame{%
-\frametitle{Grepping a 5G file}
-
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/jmwk/3517373312/}}
+\frametitle{3 separate tools}
+\begin{itemize}
+\xitem{Elasicsearch, distributed search \& analytics engine}
+\xitem{Logstash, logs managment}
+\xitem{Kibana, very nice webui to ES and Logstash}
+\end{itemize}
+}
+\section{Logstash}
+\frame{%
+\frametitle{Logstash}
     \begin{center}
-        \includegraphics[height=6cm]{files/flickr_bible.jpg}\\
+        \includegraphics[height=7.5cm]{files/logstash.png}\\
     \end{center}
 }
-%\frame{%
-%\frametitle{Keep all environments the same}
-%
-%    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bobvietnam/4828291896/}}
-%    \begin{center}
-%        \includegraphics[height=6cm]{files/flickr_jumeaux.jpg}\\
-%    \end{center}
-%}
-%\frame{%
-%\frametitle{Keep all environments the same}
-%
-%    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bobvietnam/4828291896/}}
-%    \begin{center}
-%        \includegraphics[height=6cm]{files/flickr_jumeaux.jpg}\\
-%    \end{center}
-%}
-%\frame{%
-%\frametitle{Keep all environments the same}
-%
-%    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bobvietnam/4828291896/}}
-%    \begin{center}
-%        \includegraphics[height=6cm]{files/flickr_jumeaux.jpg}\\
-%    \end{center}
-%}
+\subsection{Missions}
+\frame{%
+\frametitle{Shipping the logs}
+\begin{itemize}
+\xitem{Some applications can only write to files}
+\xitem{But you need them on the main logstash server}
+\xitem{Logstash can act as a daemon to ship the logs}
+\xitem{Destinations can be syslog, redis,\ldots}
+\xitem{Then you can act on your logs}
+\end{itemize}
+}
+\frame{%
+\frametitle{Collecting the logs}
+\begin{itemize}
+\xitem{You can plug logstash to a lot of data sources}
+\xitem{It can be passive or active}
+\xitem{Listening on a UDP port vs checking mails}
+\xitem{All your logs are managed by one application}
+\xitem{It creates fields from the logs}
+\end{itemize}
+}
+\frame{%
+\frametitle{Filtering the logs}
+\begin{itemize}
+\xitem{Making sense of a log message}
+\xitem{Finding what is important}
+\xitem{Adding and removing fields}
+\end{itemize}
+}
+\frame{%
+\frametitle{Storing the logs}
+\begin{itemize}
+\xitem{Output to Elasticsearch}
+\xitem{Sending information to statsd}
+\xitem{Sending to your inbox, to icinga or files}
+\end{itemize}
+}
+\subsection{Inputs}
+\frame{%
+    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/quinnanya/7237788632/}}
+    \begin{center}
+        \includegraphics[height=7cm]{files/eat.jpg}\\
+    \end{center}
+}
+\frame{%
+\frametitle{UDP and TCP input}
+\begin{itemize}
+\xitem{Compatible with rsyslog protocol}
+\xitem{Each syslog talks with logstash directly}
+\xitem{Allow you to use the syslog toolchains: logger, rsyslog}
+\xitem{UDP is shoot and forget}
+\end{itemize}
+}
+\begin{frame}[fragile]
+\frametitle{UDP and TCP input}
+\begin{block}{Logstash configuration}
+\begin{verbatim}
+input {
+    udp {
+        type => syslog
+        port => 5544
+    }
+    tcp {
+        type => syslog
+        port => 5544
+    }
+}
+\end{verbatim}
+\end{block}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{UDP and TCP input}
+\begin{block}{Rsyslog configuration}
+\begin{verbatim}
+*.* @logstash.example.com:5544
+\end{verbatim}
+\end{block}
+\begin{itemize}
+\xitem In \texttt{/etc/rsyslog.conf}
+\xitem That line will forward all the logs to logstash
+\xitem Logstash will make useful fields out of it: priority, severity, program\dots
+\end{itemize}
+\end{frame}
+\frame{%
+\frametitle{File}
+\begin{itemize}
+\xitem{Enable you to use logstash with every application}
+\xitem{Useful to ship the logs}
+\xitem{Acts as a \texttt{tail -n 0 -F}}
+\xitem{It works even if you use logrotate}
+\end{itemize}
+}
+\begin{frame}[fragile]
+\frametitle{File}
+\begin{block}{}
+\begin{verbatim}
+input {
+    file {
+        path => "/var/log/legacyapp.log"
+        type => "legacylog"
+    }
+}
+\end{verbatim}
+\end{block}
+\subsection{Filters}
+\end{frame}
+\frame{%
+\frametitle{Grok}
+\begin{itemize}
+\xitem{Extract fields from text}
+\xitem{Useful to read messages}
+\xitem{A lot of pre-existing patterns}
+\xitem{Uses Regex to find out fields}
+\end{itemize}
+}
+\begin{frame}[fragile]
+\frametitle{Grok}
+\begin{block}{Input text}
+\begin{verbatim}
+Invalid user oracle from 85.249.144.18
+\end{verbatim}
+\end{block}
+\begin{block}{Grok pattern}
+\begin{verbatim}
+Invalid user %{USERNAME:login} from %{IP:ip}
+\end{verbatim}
+\end{block}
+\begin{block}{Result}
+\begin{verbatim}
+{
+    "login": [
+        [ "oracle" ]
+    ],
+    "ip": [
+        [ "85.249.144.18" ]
+    ]
+}
+\end{verbatim}
+\end{block}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Grok}
+\begin{block}{}
+\begin{small}
+\begin{verbatim}
+filter {
+    grok {
+        type    => "syslog"
+        pattern => ["(?m)<%{POSINT:syslog_pri}>..."
+        add_field => [ "received_at", "%{@timestamp}" ]
+        add_field => [ "received_from", "%{@source_host}" ]
+        add_tag  => "syslog-%{syslog_program}"
+    }
+}
+\end{verbatim}
+\end{small}
+\end{block}
+\end{frame}
+\frame{%
+\frametitle{Grep}
+\begin{itemize}
+\xitem{Allows you to grep interresting messages}
+\xitem{Useful to count}
+\end{itemize}
+}
+\begin{frame}[fragile]
+\frametitle{Grep}
+\begin{block}{}
+\begin{small}
+\begin{verbatim}
+filter {
+    grep {
+        add_field => ["outputirc", "A puppet package
+                                    has been deployed"]
+        add_tag => "outputirc"
+        drop => false
+        match => [ "syslog_program", "yum" ]
+        match => [ "@source_host", "puppetmaster" ]
+        match => [ "@message", "puppet-tree" ]
+    }
+}
+\end{verbatim}
+\end{small}
+\end{block}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Geoip}
+\begin{block}{}
+\begin{verbatim}
+filter{
+    geoip {
+        tags   => ["syslog-httpd"]
+        source => ["client"]
+    }
+}
+\end{verbatim}
+\end{block}
+\begin{itemize}
+\xitem{Transform ip address into geo data}
+\xitem{Useful to filter by country/map the data}
+\end{itemize}
+\subsection{Output}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Elasticsearch}
+\begin{itemize}
+\xitem{Version of elasticsearch <=> version of logstash}
+\xitem{Unless you use the elasticsearch\_http output}
+\end{itemize}
+\begin{block}{}
+\begin{verbatim}
+output {
+    elasticsearch  {
+    }
+}
+\end{verbatim}
+\end{block}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{IRC}
+\begin{block}{}
+\begin{verbatim}
+output {
+    irc {
+        channels => ["#example"]
+        host => "chat.freenode.net"
+        nick => "loggy"
+        port => 6667
+        tags => "outputirc"
+        user => "loggy"
+        format => "%{outputirc}"  
+    }
+}
+\end{verbatim}
+\end{block}
+\section{Kibana}
+\end{frame}
+\frame{%
+\frametitle{Kibana}
+\begin{itemize}
+\xitem{Kibana is a web interface for Logstash/ES}
+\xitem{Kibana 1 was written in PHP}
+\xitem{Kibana 2 was written in Ruby}
+\xitem{Kibana 3 is written in AngularJS}
+\end{itemize}
+}
+\frame{%
+\frametitle{Kibana 3}
+\begin{itemize}
+\xitem{Everything happens in the browser}
+\xitem{The browser is connected to Elasticsearch}
+\xitem{You can save dashboards into ES}
+\xitem{You can write/template dashboards to files}
+\end{itemize}
+}
+\frame{%
+\frametitle{}
+\begin{itemize}
+\xitem{}
+\xitem{}
+\xitem{}
+\xitem{}
+\xitem{}
+\end{itemize}
+}
+\frame{%
+\frametitle{}
+\begin{itemize}
+\xitem{}
+\xitem{}
+\xitem{}
+\xitem{}
+\xitem{}
+\end{itemize}
+}
 
 
 
