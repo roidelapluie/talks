@@ -30,17 +30,17 @@
 \frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
 \frame{\tableofcontents}
 \section{Introduction}
-\frame{%
-    \begin{center}\begin{Huge}{\inuits{Julien Pivotto}}\end{Huge}\end{center}
-    \begin{large}
-    \begin{itemize}
-        \xitem{sysadmin @ inuits}
-        \xitem{open-source defender for 7+ years}
-        \xitem{devops believer}
-        \xitem{@roidelapluie on twitter/github}
-    \end{itemize}
-    \end{large}
-}
+%\frame{%
+%    \begin{center}\begin{Huge}{\inuits{Julien Pivotto}}\end{Huge}\end{center}
+%    \begin{large}
+%    \begin{itemize}
+%        \xitem{sysadmin @ inuits}
+%        \xitem{open-source defender for 7+ years}
+%        \xitem{devops believer}
+%        \xitem{@roidelapluie on twitter/github}
+%    \end{itemize}
+%    \end{large}
+%}
 
 %\subsection{Automation}
 %\frame{%
@@ -238,8 +238,8 @@ input {
 }
 \end{verbatim}
 \end{block}
-\subsection{Filters}
 \end{frame}
+\subsection{Filters}
 \frame{%
 \frametitle{Grok}
 \begin{itemize}
@@ -335,8 +335,8 @@ filter{
 \xitem{Transform ip address into geo data}
 \xitem{Useful to filter by country/map the data}
 \end{itemize}
-\subsection{Output}
 \end{frame}
+\subsection{Output}
 \begin{frame}[fragile]
 \frametitle{Elasticsearch}
 \begin{itemize}
@@ -371,6 +371,27 @@ output {
 \end{block}
 \section{Kibana}
 \end{frame}
+\begin{frame}[fragile]
+\frametitle{statsd}
+\begin{block}{}
+\begin{small}
+\begin{verbatim}
+output {
+  statsd {
+    host => '127.0.0.1'
+    sender => "logstash"
+    increment => [ "httpd.%{http_host}.r.%{response}",
+                   "httpd.response.%{response}"]
+    count => ["apache.%{http_host}.bytes", "%{bytes}" ]
+    timing => ["apache.%{http_host}", "%{duration_msec}"]
+    tags => 'grokked-apache'
+  }
+}
+\end{verbatim}
+\end{small}
+\end{block}
+\section{Kibana}
+\end{frame}
 \frame{%
 \frametitle{Kibana}
 \begin{itemize}
@@ -389,24 +410,66 @@ output {
 \xitem{You can write/template dashboards to files}
 \end{itemize}
 }
-\frame{%
-\frametitle{}
+\begin{frame}[fragile]
+\frametitle{Installing kibana3}
+\begin{block}{}
+\begin{tiny}
+\begin{verbatim}
+git clone https://github.com/elasticsearch/kibana.git
+ssh -NL 9200:127.0.0.1:9200 elasticsearch &
+python -m SimpleHTTPServer
+\end{verbatim}
+\end{tiny}
+\end{block}
+\end{frame}
+\begin{frame}[fragile]
+\frametitle{Kibana queries}
+\begin{block}{Example of a kibana query}
+\begin{tiny}
+\begin{verbatim}
+@fields.syslog_program:"httpd" AND @fields.http_host:"test.example.com" AND @fields.response:"404"
+\end{verbatim}
+\end{tiny}
+\end{block}
 \begin{itemize}
-\xitem{}
-\xitem{}
-\xitem{}
-\xitem{}
-\xitem{}
+\xitem Lucene query syntax
+\xitem Simple and effective
+\xitem Point \& click web interface
 \end{itemize}
+\end{frame}
+
+\frame{%
+\frametitle{Kibana}
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/kibana3.png}\\
+    \end{center}
 }
 \frame{%
-\frametitle{}
+\frametitle{Kibana}
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/kibana3b.png}\\
+    \end{center}
+}
+\frame{%
+\frametitle{Kibana}
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/kibana3c.png}\\
+    \end{center}
+}
+\frame{%
+\frametitle{Kibana}
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/kibana3d.png}\\
+    \end{center}
+}
+\section{Conclusion}
+\frame{%
+\frametitle{Conclusion}
 \begin{itemize}
-\xitem{}
-\xitem{}
-\xitem{}
-\xitem{}
-\xitem{}
+\xitem{Logstash is a small daemon}
+\xitem{Simple to package \& deploy (jar file)}
+\xitem{Scalable thanks to Elasticsearch}
+\xitem{Developer friendly thanks to Kibana}
 \end{itemize}
 }
 
