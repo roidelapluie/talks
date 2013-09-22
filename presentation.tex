@@ -14,464 +14,372 @@
 \usepackage{shadowtext}
 \newcommand{\xitem}[1]{\item{\shadowtext{#1}}}
 \newcommand{\inuits}[1]{\shadowtext{\color{inuits}#1}}
+\newcommand{\RelatedText}[4][0.65\textwidth]{%
+\begin{math}%
+  \left.% 
+    \parbox{#1}{#3}\vphantom{\parbox{#1}{#4}}%
+     \right#2%
+      \parbox{#1}{#4}\vphantom{\parbox{#1}{#3}}%
+     \end{math}
+    }%
 
-\newcommand{\ptitle}{Logstash and friends}
+\newcommand{\ptitle}{Building and Deploing Mediasalsa}
 
 \begin{document}
 \setbeamercovered{invisible}
-
-\title[\ptitle]{\fontsize{25}{35}\selectfont \shadowtext{\ptitle}}
+\title[\ptitle]{\fontsize{20}{35}\selectfont \shadowtext{\ptitle}}
+\subtitle{\shadowtext{A Drupal Digital Asset Management system as a Service}}
 
 \author[Julien Pivotto]{\shadowtext{Julien Pivotto}}
 %\institute[Inuits]{Inuits}
-\date{\shadowtext{Techies Teach Techies}\\\inuits{September 2, 2013}}
-\logo{\includegraphics[height=2cm]{files/logstash2.png}}
+\date{\shadowtext{DrupalCon Prague}\\\inuits{September 26, 2013}}
+\logo{\includegraphics[height=1cm]{files/logo-prague.png}}
 
 \frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
 \frame{\tableofcontents}
-\section{Introduction}
-%\frame{%
-%    \begin{center}\begin{Huge}{\inuits{Julien Pivotto}}\end{Huge}\end{center}
-%    \begin{large}
-%    \begin{itemize}
-%        \xitem{sysadmin @ inuits}
-%        \xitem{open-source defender for 7+ years}
-%        \xitem{devops believer}
-%        \xitem{@roidelapluie on twitter/github}
-%    \end{itemize}
-%    \end{large}
-%}
+\begin{frame}
+\frametitle{MediaMosa}
+    \begin{center}
+        \includegraphics[height=3cm]{files/mediamosa.png}\\
+    \end{center}
+\begin{itemize}
+\xitem{MediaMosa is a Digital Asset Managment system}
+\xitem{Based on Drupal}
+\xitem{Webservice oriented}
+\xitem{Build to store assets}
+\xitem{Trancode and stream videos}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{MediaSalsa}
+    \begin{center}
+        \includegraphics[height=2cm]{files/mediasalsa.png}\\
+        \Huge{\shadowtext{$=$}}\\
+        \Huge{\shadowtext{MediaMosa as a Service}}
+    \end{center}
+\end{frame}
+\begin{frame}
+\frametitle{MediaSalsa infrastructure (Simplified)}
+\RelatedText{\}}{%
+\begin{itemize}
+\xitem{Backend: Core service (MediaMosa)}
+\xitem{Frontends: Optional}
+\begin{itemize}
+\item[$\Rightarrow$]{\shadowtext{1 pipeline/project}}
+\end{itemize}
+\xitem{Web servers}
+\xitem{Database server}
+\xitem{Transcoding servers}
+\end{itemize}
+}{\shadowtext{for each environment}}
+\end{frame}
+\section{Culture}
+\frame{%
+\begin{center}
+\Huge{\color{inuits}Culture}\\
+\LARGE{\color{grey}Automation}\\
+\LARGE{\color{grey}Measurement}\\
+\LARGE{\color{grey}Sharing}
+\end{center}
+}
+\subsection{Our company}
+\begin{frame}
+\frametitle{Inuits}
+\begin{itemize}
+\LARGE
+\xitem{Inuits is an {\color{inuits}Open-Source} company}\pause
+\begin{itemize}
+\LARGE
+\item[$\Rightarrow$]{\shadowtext{We contribute back}}\pause
+\end{itemize}
+\xitem{$\pm$ 40 people in 3 countries}
+\xitem{One language: English}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Inuits}
+\begin{center}
+\large
+What do we do?
+\end{center}
+\begin{itemize}
+\LARGE
+\xitem{Consulting {\color{red}vs} Internal projects}\pause
+\xitem{Ideal world {\color{red}vs} budget and reality}\pause
+\begin{itemize}
+\LARGE
+\item[$\Rightarrow$]{\shadowtext{{\color{inuits}pragmatic} approach}}
+\end{itemize}
+\end{itemize}
+\end{frame}
+\subsection{The teams}
+\begin{frame}
+\frametitle{Distributed team}
+\begin{center}
+\Huge{Communication $=$ \color{red}hell}\pause\\
+%find a nice picture
+\vspace{0.7cm}
+\LARGE How to fix it?
+\end{center}
+\begin{itemize}
+\xitem{Daily virtual stand-up over XMPP}
+\xitem{Redmine project managment}
+\begin{itemize}
+\xitem{Tasks}
+\xitem{Repositories}
+\xitem{Documentation (wiki)}
+\end{itemize}
+\xitem{Internal mailing lists}
+\xitem{Jenkins notifications by mail and XMPP}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Dev and ops}
+\begin{columns}[t]
+\column{.5\textwidth}
+\center{\Huge \shadowtext{Dev}}\\
+\begin{itemize}
+\xitem{Develop new features}
+\xitem{Write tests}
+\end{itemize}
+\column{.5\textwidth}
+\center{\Huge \shadowtext{Ops}}\\
+\begin{itemize}
+\xitem{Infrastructure (puppet)}
+\xitem{CD and CI (jenkins)}
+\end{itemize}
+\end{columns}
+\begin{center}
+Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distributed service}
+\end{center}
+\end{frame}
 
-%\subsection{Automation}
-%\frame{%
-%\frametitle{Infrastructure as Code}
-%    \begin{LARGE}
-%    \begin{itemize}
-%        \xitem{Keep your environments under SCM}
-%        \xitem{Overview of complete environments}
-%        \xitem{Reduce the deployment time}
-%    \end{itemize}
-%    \end{LARGE}
-%}
-%\frame{%
-%\frametitle{Keep all environments the same}
-%
-%    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/bobvietnam/4828291896/}}
-%    \begin{center}
-%        \includegraphics[height=6cm]{files/flickr_jumeaux.jpg}\\
-%    \end{center}
-%}
-%
-%\frame{%
-%\frametitle{Logging}
+
+
+
+\section{Automation}
+\frame{%
+\begin{center}
+\LARGE{\color{grey}Culture}\\
+\Huge{\color{inuits}Automation}\\
+\LARGE{\color{grey}Measurement}\\
+\LARGE{\color{grey}Sharing}
+\end{center}
+}
+\subsection{Puppet}
+\begin{frame}
+\frametitle{Puppet}
+\begin{center}
+\LARGE {\color{inuits}Puppet} automates {\color{inuits} all the things}\\
+\vspace{1cm}
+\large {$\Rightarrow$\hspace{0.3cm}\color{inuits}mcollective} orchestrates {\color{inuits} all the things}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{CD}
+\begin{center}
+\large
+\shadowtext{Continuous Delivery {\color{red}vs} Continuous Deployment}
+\end{center}
+\begin{itemize}
+\xitem{Puppet code $\Rightarrow$ Deployment}
+\begin{itemize}
+\xitem{Same puppet code for each environment}
+\xitem{User-triggered deployments}
+\xitem{Feature flags in Puppet code per environment}
+\end{itemize}
+\xitem{Application code $\Rightarrow$ Delivery}
+\end{itemize}
+\end{frame}
+\subsection{Jenkins}
+\begin{frame}
+\frametitle{Tests}
+\begin{center}
+\LARGE{Dev use tests a lot}
+\end{center}
+\begin{itemize}
+\item[\dots]{\shadowtext{They don't work}}
+\item[\dots]{\shadowtext{It works on my machine}}
+\item[\dots]{\shadowtext{Wrong platform}}
+\item[\dots]{\shadowtext{Wrong PHP version}}
+\item[$\Rightarrow$]{\large\shadowtext{\color{green}Fixed now, thanks to Jenkins!}}
+\end{itemize}
+%\begin{right}
+\end{frame}
+\begin{frame}
+\frametitle{Environments}
+\RelatedText{\}}{%
+\begin{itemize}
+\xitem{Development}
+\xitem{UAT}
+\xitem{Prod}
+\begin{itemize}
+\xitem{.ac}
+\xitem{.com}
+\xitem{dedicated}
+\end{itemize}
+\end{itemize}}{\shadowtext{$\neq$ versions}}
+\end{frame}
+\begin{frame}
+\frametitle{SCM}
+\begin{center}
+\huge
+Code is under revision control (git)
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{Pipelines}
+\begin{itemize}
+\xitem{A collection of jobs}
+\xitem{Run one after another}
+\xitem{Start on checkout, end on deployment}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Jenkins pipelines}
+\begin{itemize}
+\xitem{Puppetized}
+\xitem{Puppet code}
+\xitem{Application code (backend and frontends)}
+\xitem{One pipeline/project/customer}
+\xitem{Run tests, package code, \dots}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Pipelines steps}
+\begin{itemize}
+\xitem{Checkout}
+\xitem{Syntax}
+\xitem{Style}
+\xitem{Package}
+\xitem{Deploy to dev environment}
+\xitem{Tests in dev environment}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Promotion}
+\begin{itemize}
+\xitem{At the end of the pipeline}
+\xitem{Send a simple email}
+\begin{itemize}
+\xitem{A link to the promotion page}
+\xitem{The changelog}
+\end{itemize}
+\xitem{Promotion page contains one button per environment}
+\xitem{Must promote to UAT before Production}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Tools used with jenkins}
+\begin{itemize}
+\xitem{Pulp to manage RPM repositories}
+\xitem{Mcollective to update packages, run drush}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+
+
+
+\section{Measurement}
+\frame{%
+\begin{center}
+\LARGE{\color{grey}Culture}\\
+\LARGE{\color{grey}Automation}\\
+\Huge{\color{inuits}Measurement}\\
+\LARGE{\color{grey}Sharing}
+\end{center}
+}
+\begin{frame}
+\frametitle{Logstash}
+\begin{center}
+\huge
+Collect all the logs
+\end{center}
+\begin{itemize}
+\xitem{Drupal logs}
+\xitem{Apache logs}
+\xitem{Deployment logs}
+\xitem{System logs}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Icinga}
+\begin{center}
+\huge
+Monitor everything
+\end{center}
+\begin{itemize}
+\xitem{"Basics"}
+\item[$+$]{\shadowtext{vhosts}}
+\item[$+$]{\shadowtext{databases}}
+\item[$+$]{\shadowtext{cronjobs}}
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Graphite + gdash}
+\begin{itemize}
+\xitem{Collectd + custom script}
+\xitem{Monitor platform usage}
+\xitem{FFmpeg usage}
+\xitem{Number of acccouts (backend ID's)}
+\end{itemize}
+\end{frame}
+\section{Sharing}
+\frame{%
+\begin{center}
+\LARGE{\color{grey}Culture}\\
+\LARGE{\color{grey}Automation}\\
+\LARGE{\color{grey}Measurement}\\
+\Huge{\color{inuits}Sharing}
+\end{center}
+}
+\begin{frame}
+\frametitle{Sharing}
+\begin{center}
+\LARGE
+\shadowtext{We have just {\color{inuits}\Huge{shared}} our experience\dots}\\
+\vspace{2cm}
+\shadowtext{Any question?}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{What did you think?}
+\large
+Locate this session at the DrupalCon Prague website:\\
+{\color{inuits}\texttt{http://prague2013.drupal.org/schedule}}\\
+\vspace{0.5cm}
+Click the "take the survey" link.\\
+\vspace{2cm}
+{\Huge{Thank you!}}
+\end{frame}
+%\begin{frame}
+%\frametitle{}
 %\begin{itemize}
-%\xitem{Recording of events}
-%\xitem{Voice of your systems and applications}
-%\xitem{It tells you almose everything}
-%\xitem{It is a source of knowledge}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Logging is useful}
-%\begin{itemize}
-%\xitem{Understanding outages}\pause
-%\xitem{not only when it's wrong}
-%\xitem{you can extract metrics}
-%\xitem{no logs means something}
-%\xitem{it tells you what, why, who, when}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Logging in the wild}
-%\begin{itemize}
-%\xitem{Syslog}
-%\xitem{\texttt{|tee /var/log/myapp.log}}
-%\xitem{Cron + \texttt{MAILTO=}}
-%\xitem{\texttt{\&>/dev/null}}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Logging in the past}
-%\begin{itemize}
-%\xitem{Logging to files on each server}
-%\xitem{Using syslog protocol}
-%\xitem{Decentralized}
-%\xitem{Reading requires SSH access}
-%\xitem{Not developer friendly}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{The tools nowadays}
-%\begin{itemize}
-%\xitem{Jenkins, Icinga, Graphite, Foreman}
-%\xitem{Nice web interfaces}
-%\xitem{Centralized}
-%\xitem{Easy to use}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Requirements}
-%\begin{itemize}
-%\xitem{Scalable tools}
-%\xitem{Configured by text files}
-%\xitem{Playing with existing tools}
-%\xitem{Scalable}
-%\xitem{Following the Unix philosophy}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{3 separate tools}
-%\begin{itemize}
-%\xitem{Elasicsearch, distributed search \& analytics engine}
-%\xitem{Logstash, logs managment}
-%\xitem{Kibana, very nice webui to ES and Logstash}
-%\end{itemize}
-%}
-%\section{Logstash}
-%\frame{%
-%\frametitle{Logstash}
-%    \begin{center}
-%        \includegraphics[height=7.5cm]{files/logstash.png}\\
-%    \end{center}
-%}
-%\subsection{Missions}
-%\frame{%
-%\frametitle{Shipping the logs}
-%\begin{itemize}
-%\xitem{Some applications can only write to files}
-%\xitem{But you need them on the main logstash server}
-%\xitem{Logstash can act as a daemon to ship the logs}
-%\xitem{Destinations can be syslog, redis,\ldots}
-%\xitem{Then you can act on your logs}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Collecting the logs}
-%\begin{itemize}
-%\xitem{You can plug logstash to a lot of data sources}
-%\xitem{It can be passive or active}
-%\xitem{Listening on a UDP port vs checking mails}
-%\xitem{All your logs are managed by one application}
-%\xitem{It creates fields from the logs}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Filtering the logs}
-%\begin{itemize}
-%\xitem{Making sense of a log message}
-%\xitem{Finding what is important}
-%\xitem{Adding and removing fields}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Storing the logs}
-%\begin{itemize}
-%\xitem{Output to Elasticsearch}
-%\xitem{Sending information to statsd}
-%\xitem{Sending to your inbox, to icinga or files}
-%\end{itemize}
-%}
-%\subsection{Inputs}
-%\frame{%
-%    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/quinnanya/7237788632/}}
-%    \begin{center}
-%        \includegraphics[height=7cm]{files/eat.jpg}\\
-%    \end{center}
-%}
-%\frame{%
-%\frametitle{UDP and TCP input}
-%\begin{itemize}
-%\xitem{Compatible with rsyslog protocol}
-%\xitem{Each syslog talks with logstash directly}
-%\xitem{Allow you to use the syslog toolchains: logger, rsyslog}
-%\xitem{UDP is shoot and forget}
-%\end{itemize}
-%}
-%\begin{frame}[fragile]
-%\frametitle{UDP and TCP input}
-%\begin{block}{Logstash configuration}
-%\begin{verbatim}
-%input {
-%    udp {
-%        type => syslog
-%        port => 5544
-%    }
-%    tcp {
-%        type => syslog
-%        port => 5544
-%    }
-%}
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-%\begin{frame}[fragile]
-%\frametitle{UDP and TCP input}
-%\begin{block}{Rsyslog configuration}
-%\begin{verbatim}
-%*.* @logstash.example.com:5544
-%\end{verbatim}
-%\end{block}
-%\begin{itemize}
-%\xitem In \texttt{/etc/rsyslog.conf}
-%\xitem That line will forward all the logs to logstash
-%\xitem Logstash will make useful fields out of it: priority, severity, program\dots
-%\end{itemize}
-%\end{frame}
-%\frame{%
-%\frametitle{File}
-%\begin{itemize}
-%\xitem{Enable you to use logstash with every application}
-%\xitem{Useful to ship the logs}
-%\xitem{Acts as a \texttt{tail -n 0 -F}}
-%\xitem{It works even if you use logrotate}
-%\end{itemize}
-%}
-%\begin{frame}[fragile]
-%\frametitle{File}
-%\begin{block}{}
-%\begin{verbatim}
-%input {
-%    file {
-%        path => "/var/log/legacyapp.log"
-%        type => "legacylog"
-%    }
-%}
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-%\subsection{Filters}
-%\frame{%
-%\frametitle{Grok}
-%\begin{itemize}
-%\xitem{Extract fields from text}
-%\xitem{Useful to read messages}
-%\xitem{A lot of pre-existing patterns}
-%\xitem{Uses Regex to find out fields}
-%\end{itemize}
-%}
-%\begin{frame}[fragile]
-%\frametitle{Grok}
-%\begin{block}{Input text}
-%\begin{verbatim}
-%Invalid user oracle from 85.249.144.18
-%\end{verbatim}
-%\end{block}
-%\begin{block}{Grok pattern}
-%\begin{verbatim}
-%Invalid user %{USERNAME:login} from %{IP:ip}
-%\end{verbatim}
-%\end{block}
-%\begin{block}{Result}
-%\begin{verbatim}
-%{
-%    "login": [
-%        [ "oracle" ]
-%    ],
-%    "ip": [
-%        [ "85.249.144.18" ]
-%    ]
-%}
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-%\begin{frame}[fragile]
-%\frametitle{Grok}
-%\begin{block}{}
-%\begin{small}
-%\begin{verbatim}
-%filter {
-%    grok {
-%        type    => "syslog"
-%        pattern => ["(?m)<%{POSINT:syslog_pri}>..."
-%        add_field => [ "received_at", "%{@timestamp}" ]
-%        add_field => [ "received_from", "%{@source_host}" ]
-%        add_tag  => "syslog-%{syslog_program}"
-%    }
-%}
-%\end{verbatim}
-%\end{small}
-%\end{block}
-%\end{frame}
-%\frame{%
-%\frametitle{Grep}
-%\begin{itemize}
-%\xitem{Allows you to grep interresting messages}
-%\xitem{Useful to count}
-%\end{itemize}
-%}
-%\begin{frame}[fragile]
-%\frametitle{Grep}
-%\begin{block}{}
-%\begin{small}
-%\begin{verbatim}
-%filter {
-%    grep {
-%        add_field => ["outputirc", "A puppet package
-%                                    has been deployed"]
-%        add_tag => "outputirc"
-%        drop => false
-%        match => [ "syslog_program", "yum" ]
-%        match => [ "@source_host", "puppetmaster" ]
-%        match => [ "@message", "puppet-tree" ]
-%    }
-%}
-%\end{verbatim}
-%\end{small}
-%\end{block}
-%\end{frame}
-%\begin{frame}[fragile]
-%\frametitle{Geoip}
-%\begin{block}{}
-%\begin{verbatim}
-%filter{
-%    geoip {
-%        tags   => ["syslog-httpd"]
-%        source => ["client"]
-%    }
-%}
-%\end{verbatim}
-%\end{block}
-%\begin{itemize}
-%\xitem{Transform ip address into geo data}
-%\xitem{Useful to filter by country/map the data}
+%\xitem{}
 %\end{itemize}
 %\end{frame}
-%\subsection{Output}
-%\begin{frame}[fragile]
-%\frametitle{Elasticsearch}
+%\begin{frame}
+%\frametitle{}
 %\begin{itemize}
-%\xitem{Version of elasticsearch <=> version of logstash}
-%\xitem{Unless you use the elasticsearch\_http output}
-%\end{itemize}
-%\begin{block}{}
-%\begin{verbatim}
-%output {
-%    elasticsearch  {
-%    }
-%}
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-%\begin{frame}[fragile]
-%\frametitle{IRC}
-%\begin{block}{}
-%\begin{verbatim}
-%output {
-%    irc {
-%        channels => ["#example"]
-%        host => "chat.freenode.net"
-%        nick => "loggy"
-%        port => 6667
-%        tags => "outputirc"
-%        user => "loggy"
-%        format => "%{outputirc}"  
-%    }
-%}
-%\end{verbatim}
-%\end{block}
-%\end{frame}
-%\section{Kibana}
-%\begin{frame}[fragile]
-%\frametitle{statsd}
-%\begin{block}{}
-%\begin{small}
-%\begin{verbatim}
-%output {
-%  statsd {
-%    host => '127.0.0.1'
-%    sender => "logstash"
-%    increment => [ "httpd.%{http_host}.r.%{response}",
-%                   "httpd.response.%{response}"]
-%    count => ["apache.%{http_host}.bytes", "%{bytes}" ]
-%    timing => ["apache.%{http_host}", "%{duration_msec}"]
-%    tags => 'grokked-apache'
-%  }
-%}
-%\end{verbatim}
-%\end{small}
-%\end{block}
-%\end{frame}
-%\frame{%
-%\frametitle{Kibana}
-%\begin{itemize}
-%\xitem{Kibana is a web interface for Logstash/ES}
-%\xitem{Kibana 1 was written in PHP}
-%\xitem{Kibana 2 was written in Ruby}
-%\xitem{Kibana 3 is written in AngularJS}
-%\end{itemize}
-%}
-%\frame{%
-%\frametitle{Kibana 3}
-%\begin{itemize}
-%\xitem{Everything happens in the browser}
-%\xitem{The browser is connected to Elasticsearch}
-%\xitem{You can save dashboards into ES}
-%\xitem{You can write/template dashboards to files}
-%\end{itemize}
-%}
-%\begin{frame}[fragile]
-%\frametitle{Installing kibana3}
-%\begin{block}{}
-%\begin{tiny}
-%\begin{verbatim}
-%git clone https://github.com/elasticsearch/kibana.git
-%ssh -NL 9200:127.0.0.1:9200 elasticsearch &
-%python -m SimpleHTTPServer
-%\end{verbatim}
-%\end{tiny}
-%\end{block}
-%\end{frame}
-%\begin{frame}[fragile]
-%\frametitle{Kibana queries}
-%\begin{block}{Example of a kibana query}
-%\begin{tiny}
-%\begin{verbatim}
-%@fields.syslog_program:"httpd" AND @fields.http_host:"test.example.com" AND @fields.response:"404"
-%\end{verbatim}
-%\end{tiny}
-%\end{block}
-%\begin{itemize}
-%\xitem Lucene query syntax
-%\xitem Simple and effective
-%\xitem Point \& click web interface
+%\xitem{}
 %\end{itemize}
 %\end{frame}
-%
-%\frame{%
-%\frametitle{Kibana}
-%    \begin{center}
-%        \includegraphics[height=7.5cm]{files/kibana3.png}\\
-%    \end{center}
-%}
-%\frame{%
-%\frametitle{Kibana}
-%    \begin{center}
-%        \includegraphics[height=7.5cm]{files/kibana3b.png}\\
-%    \end{center}
-%}
-%\frame{%
-%\frametitle{Kibana}
-%    \begin{center}
-%        \includegraphics[height=7.5cm]{files/kibana3c.png}\\
-%    \end{center}
-%}
-%\frame{%
-%\frametitle{Kibana}
-%    \begin{center}
-%        \includegraphics[height=7.5cm]{files/kibana3d.png}\\
-%    \end{center}
-%}
-%\section{Conclusion}
-%\frame{%
-%\frametitle{Conclusion}
+%\begin{frame}
+%\frametitle{}
 %\begin{itemize}
-%\xitem{Logstash is a small daemon}
-%\xitem{Simple to package \& deploy (jar file)}
-%\xitem{Scalable thanks to Elasticsearch}
-%\xitem{Developer friendly thanks to Kibana}
+%\xitem{}
 %\end{itemize}
-%}
-%
-%
+%\end{frame}
+%\begin{frame}
+%\frametitle{}
+%\begin{itemize}
+%\xitem{}
+%\end{itemize}
+%\end{frame}
 
 \end{document}
