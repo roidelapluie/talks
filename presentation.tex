@@ -12,6 +12,8 @@
 \definecolor{darkgrey}{RGB}{100,100,100}
 \definecolor{inuits}{RGB}{153,153,255}
 \usepackage{shadowtext}
+
+\usepackage{pdfpages}
 \newcommand{\xitem}[1]{\item{\shadowtext{#1}}}
 \newcommand{\inuits}[1]{\shadowtext{\color{inuits}#1}}
 \newcommand{\RelatedText}[4][0.65\textwidth]{%
@@ -23,7 +25,7 @@
      \end{math}
     }%
 
-\newcommand{\ptitle}{Building and Deploing Mediasalsa}
+\newcommand{\ptitle}{Building and Deploying Mediasalsa}
 
 \begin{document}
 \setbeamercovered{invisible}
@@ -36,18 +38,20 @@
 \logo{\includegraphics[height=1cm]{files/logo-prague.png}}
 
 \frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
-\frame{\tableofcontents}
+%\frame{\tableofcontents}
 \begin{frame}
 \frametitle{MediaMosa}
     \begin{center}
         \includegraphics[height=3cm]{files/mediamosa.png}\\
     \end{center}
 \begin{itemize}
-\xitem{MediaMosa is a Digital Asset Managment system}
-\xitem{Based on Drupal}
+\xitem{Drupal-based Digital Asset Management system}
+\xitem{Open-source}
+\xitem{Store assets}
+\xitem{Trancode videos}
+\item{\shadowtext{Create, extract and manage metadata using open standards:}\\
+\shadowtext{Dublin Core, Qualified DC, IEEE/LOM, CZP}}
 \xitem{Webservice oriented}
-\xitem{Build to store assets}
-\xitem{Trancode and stream videos}
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -59,21 +63,19 @@
     \end{center}
 \end{frame}
 \begin{frame}
-\frametitle{MediaSalsa infrastructure (Simplified)}
+\frametitle{MediaSalsa infrastructure (simplified)}
 \RelatedText{\}}{%
 \begin{itemize}
 \xitem{Backend: Core service (MediaMosa)}
 \xitem{Frontends: Optional}
-\begin{itemize}
-\item[$\Rightarrow$]{\shadowtext{1 pipeline/project}}
-\end{itemize}
 \xitem{Web servers}
 \xitem{Database server}
+\xitem{Solr server}
 \xitem{Transcoding servers}
 \end{itemize}
 }{\shadowtext{for each environment}}
 \end{frame}
-\section{Culture}
+%\section{Culture}
 \frame{%
 \begin{center}
 \Huge{\color{inuits}Culture}\\
@@ -82,15 +84,15 @@
 \LARGE{\color{grey}Sharing}
 \end{center}
 }
-\subsection{Our company}
+%\subsection{Our company}
 \begin{frame}
 \frametitle{Inuits}
 \begin{itemize}
 \LARGE
-\xitem{Inuits is an {\color{inuits}Open-Source} company}\pause
+\xitem{Inuits is an {\color{inuits}Open-Source} company}
 \begin{itemize}
 \LARGE
-\item[$\Rightarrow$]{\shadowtext{We contribute back}}\pause
+\item[$\Rightarrow$]{\shadowtext{We contribute back}}
 \end{itemize}
 \xitem{$\pm$ 40 people in 3 countries}
 \xitem{One language: English}
@@ -104,25 +106,30 @@ What do we do?
 \end{center}
 \begin{itemize}
 \LARGE
-\xitem{Consulting {\color{red}vs} Internal projects}\pause
-\xitem{Ideal world {\color{red}vs} budget and reality}\pause
-\begin{itemize}
-\LARGE
-\item[$\Rightarrow$]{\shadowtext{{\color{inuits}pragmatic} approach}}
-\end{itemize}
+\xitem{Consulting {\color{inuits}and} Internal projects}
+\xitem{Development {\color{inuits}and} System administration}
 \end{itemize}
 \end{frame}
-\subsection{The teams}
+\begin{frame}
+\frametitle{Inuits}
+\begin{center}
+\LARGE
+\shadowtext{Ideal world {\color{red}vs} budget and reality}\\
+\LARGE
+\shadowtext{$\Rightarrow$ pragmatic approach}
+\end{center}
+\end{frame}
+%\subsection{The teams}
 \begin{frame}
 \frametitle{Distributed team}
 \begin{center}
-\Huge{Communication $=$ \color{red}hell}\pause\\
+\Huge{Communication $=$ \color{red}hell}\\
 %find a nice picture
 \vspace{0.7cm}
 \LARGE How to fix it?
 \end{center}
 \begin{itemize}
-\xitem{Daily virtual stand-up over XMPP}
+\xitem{Daily virtual stand-up over XMPP/Hangout}
 \xitem{Redmine project managment}
 \begin{itemize}
 \xitem{Tasks}
@@ -131,10 +138,11 @@ What do we do?
 \end{itemize}
 \xitem{Internal mailing lists}
 \xitem{Jenkins notifications by mail and XMPP}
+\xitem{Internal training}
 \end{itemize}
 \end{frame}
 \begin{frame}
-\frametitle{Dev and ops}
+\frametitle{Dev and Ops}
 \begin{columns}[t]
 \column{.5\textwidth}
 \center{\Huge \shadowtext{Dev}}\\
@@ -150,14 +158,15 @@ What do we do?
 \end{itemize}
 \end{columns}
 \begin{center}
-Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distributed service}
+\shadowtext{Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distributed service}}\\
+\shadowtext{Dev teach to ops about required libraries and tests}
 \end{center}
 \end{frame}
 
 
 
 
-\section{Automation}
+%\section{Automation}
 \frame{%
 \begin{center}
 \LARGE{\color{grey}Culture}\\
@@ -166,7 +175,7 @@ Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distr
 \LARGE{\color{grey}Sharing}
 \end{center}
 }
-\subsection{Puppet}
+%\subsection{Puppet}
 \begin{frame}
 \frametitle{Puppet}
 \begin{center}
@@ -182,23 +191,29 @@ Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distr
 \shadowtext{Continuous Delivery {\color{red}vs} Continuous Deployment}
 \end{center}
 \begin{itemize}
-\xitem{Puppet code $\Rightarrow$ Deployment}
+\xitem{Puppet code}
 \begin{itemize}
+\xitem{Deployed to dev environment}
 \xitem{Same puppet code for each environment}
-\xitem{User-triggered deployments}
+\xitem{User-triggered deployments to UAT and prod}
 \xitem{Feature flags in Puppet code per environment}
 \end{itemize}
-\xitem{Application code $\Rightarrow$ Delivery}
+\xitem{Application code}
+\begin{itemize}
+\xitem{Continuous integration in dev}
+\xitem{User-triggered deployments to UAT}
+\xitem{Deployment to prod is a business decision}
+\end{itemize}
 \end{itemize}
 \end{frame}
-\subsection{Jenkins}
+%\subsection{Jenkins}
 \begin{frame}
 \frametitle{Tests}
 \begin{center}
-\LARGE{Dev use tests a lot}
+\LARGE{Developers test a lot}
 \end{center}
 \begin{itemize}
-\item[\dots]{\shadowtext{They don't work}}
+\item[\dots]{\shadowtext{The tests don't work}}
 \item[\dots]{\shadowtext{It works on my machine}}
 \item[\dots]{\shadowtext{Wrong platform}}
 \item[\dots]{\shadowtext{Wrong PHP version}}
@@ -206,26 +221,43 @@ Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distr
 \end{itemize}
 %\begin{right}
 \end{frame}
-\begin{frame}
-\frametitle{Environments}
-\RelatedText{\}}{%
-\begin{itemize}
-\xitem{Development}
-\xitem{UAT}
-\xitem{Prod}
-\begin{itemize}
-\xitem{.ac}
-\xitem{.com}
-\xitem{dedicated}
-\end{itemize}
-\end{itemize}}{\shadowtext{$\neq$ versions}}
-\end{frame}
+%\begin{frame}
+%\frametitle{Environments}
+%\RelatedText{\}}{%
+%\begin{itemize}
+%\xitem{Development}
+%\xitem{UAT}
+%\xitem{Prod}
+%\begin{itemize}
+%\xitem{.ac}
+%\xitem{.com}
+%\xitem{dedicated}
+%\end{itemize}
+%\end{itemize}}{\shadowtext{$\neq$ versions}}
+%\end{frame}
 \begin{frame}
 \frametitle{SCM}
 \begin{center}
-\huge
-Code is under revision control (git)
+{\huge
+\shadowtext{Code is under revision control (git)}
+}
+\large
+\begin{itemize}
+\xitem{Prefer small commits}
+\xitem{Local features branches}
+\xitem{Packages}
+\end{itemize}
 \end{center}
+\end{frame}
+\begin{frame}
+\frametitle{Using OS packaging system}
+\begin{itemize}
+\xitem{Consistency, security, dependencies}
+\xitem{Uniquely identify where files are coming from}
+\xitem{Source repo may not be reacheable}
+\xitem{Little overhead when you automate}
+\xitem{\color{red}Configuration does not belong to a package}
+\end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{Pipelines}
@@ -233,31 +265,55 @@ Code is under revision control (git)
 \xitem{A collection of jobs}
 \xitem{Run one after another}
 \xitem{Start on checkout, end on deployment}
+\xitem{From the developers' side:}
+\begin{itemize}
+\item[$\Rightarrow$]{\shadowtext{Git push}}
+\item[$\Leftarrow$]{\shadowtext{Mail with changes + link to deploy}}
+\end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}
-\frametitle{Jenkins pipelines}
+\begin{frame}[fragile]
+\frametitle{Our pipelines}
 \begin{itemize}
 \xitem{Puppetized}
-\xitem{Puppet code}
-\xitem{Application code (backend and frontends)}
-\xitem{One pipeline/project/customer}
-\xitem{Run tests, package code, \dots}
+\xitem{Puppet code and Application code (backend and frontends)}
+\xitem{1 pipeline/project/customer}
+\vspace{0.5cm}
+\begin{block}{Defining a pipeline}
+\footnotesize
+\texttt{salsajobs::pipeline::frontend~\{}\\
+\texttt{~'qwerty-inc':}\\
+\texttt{~~git\_repository~=>~'ssh://git@redmine/qwerty.git',}\\
+\texttt{~~dashboard\_view~=>~'mds-frontends',}\\
+\texttt{~~target\_urls~~~~=>~\{}\\
+\texttt{~~~~'uat'~~~~~~~~=>~'http://qwerty.uat.mediasalsa.eu',}\\
+\texttt{~~~~'prod'~~~~~~~=>~'http://qwerty.mediasalsa.eu',}\\
+\texttt{~~\},}\\
+\texttt{~~require~~~~~~~~=>~Salsajobs::Views::Dashboard['mds-frontends'],}\\
+\texttt{\}}
+\end{block}
 \end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{Pipelines steps}
+    \begin{center}
+        \includegraphics[width=10cm]{files/pipeline-drupalcon.png}\\
+    \end{center}
 \begin{itemize}
 \xitem{Checkout}
-\xitem{Syntax}
-\xitem{Style}
-\xitem{Package}
-\xitem{Deploy to dev environment}
-\xitem{Tests in dev environment}
+\xitem{Syntax: \texttt{php -l}}
+\xitem{Style: Drupal Coder}
+\xitem{Package: FPM}
+\xitem{Deploy to dev environment: Mco}
+\xitem{Tests in dev environment: \texttt{drush run-tests}}
+\xitem{Publish package and promote: Mco}
 \end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{Promotion}
+    \begin{center}
+        \includegraphics[width=11cm]{files/promotion.png}\\
+    \end{center}
 \begin{itemize}
 \xitem{At the end of the pipeline}
 \xitem{Send a simple email}
@@ -272,6 +328,7 @@ Code is under revision control (git)
 \begin{frame}
 \frametitle{Tools used with jenkins}
 \begin{itemize}
+%TODO: add drush php tests, etc
 \xitem{Pulp to manage RPM repositories}
 \xitem{Mcollective to update packages, run drush}
 \end{itemize}
@@ -285,7 +342,7 @@ Code is under revision control (git)
 
 
 
-\section{Measurement}
+%\section{Measurement}
 \frame{%
 \begin{center}
 \LARGE{\color{grey}Culture}\\
@@ -305,6 +362,7 @@ Collect all the logs
 \xitem{Apache logs}
 \xitem{Deployment logs}
 \xitem{System logs}
+\item[$\Rightarrow$]{\color{green}\shadowtext{Logstash, ES, kibana, statsd, graphite}}
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -323,13 +381,42 @@ Monitor everything
 \begin{frame}
 \frametitle{Graphite + gdash}
 \begin{itemize}
-\xitem{Collectd + custom script}
+\xitem{Collectd}
 \xitem{Monitor platform usage}
 \xitem{FFmpeg usage}
-\xitem{Number of acccouts (backend ID's)}
+\xitem{Number of accounts (backend ID's)}
 \end{itemize}
 \end{frame}
-\section{Sharing}
+\begin{frame}
+\frametitle{FFmpeg}
+
+    \begin{center}
+        \includegraphics[height=8cm]{files/ffmpeg.png}\\
+    \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Managed assets}
+
+    \begin{center}
+        \includegraphics[height=8cm]{files/managed.png}\\
+    \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Number of backend ID's}
+
+    \begin{center}
+        \includegraphics[height=8cm]{files/graphite.png}\\
+    \end{center}
+\end{frame}
+
+
+
+
+
+
+%\section{Sharing}
 \frame{%
 \begin{center}
 \LARGE{\color{grey}Culture}\\
@@ -346,16 +433,6 @@ Monitor everything
 \vspace{2cm}
 \shadowtext{Any question?}
 \end{center}
-\end{frame}
-\begin{frame}
-\frametitle{What did you think?}
-\large
-Locate this session at the DrupalCon Prague website:\\
-{\color{inuits}\texttt{http://prague2013.drupal.org/schedule}}\\
-\vspace{0.5cm}
-Click the "take the survey" link.\\
-\vspace{2cm}
-{\Huge{Thank you!}}
 \end{frame}
 \frame{%
 \frametitle{Contact}
@@ -380,6 +457,11 @@ Click the "take the survey" link.\\
     \end{small}
         \end{column}
         \end{columns}
+}
+{%
+\usebackgroundtemplate{}
+\setbeamercolor{background canvas}{bg=}
+\includepdf{slides.pdf}
 }
 
 
