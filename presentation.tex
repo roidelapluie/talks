@@ -15,7 +15,9 @@
 
 \usepackage{pdfpages}
 \newcommand{\xitem}[1]{\item{\shadowtext{#1}}}
+\newcommand{\st}[1]{\shadowtext{#1}}
 \newcommand{\inuits}[1]{\shadowtext{\color{inuits}#1}}
+\renewcommand{\frametitle}[1]{\begin{center}\Huge\inuits{#1}\end{center}}
 \newcommand{\RelatedText}[4][0.65\textwidth]{%
 \begin{math}%
   \left.% 
@@ -25,412 +27,409 @@
      \end{math}
     }%
 
-\newcommand{\ptitle}{Building and Deploying Mediasalsa}
+\newcommand{\ptitle}{The devops approach to monitoring, Open Source and IAC Style}
 
 \begin{document}
 \setbeamercovered{invisible}
-\title[\ptitle]{\fontsize{20}{35}\selectfont \shadowtext{\ptitle}}
-\subtitle{\shadowtext{A Drupal Digital Asset Management system as a Service}}
+\title[DevOps and monitoring]{\fontsize{20}{35}\selectfont \shadowtext{The devops approach to monitoring,}\\\shadowtext{Open Source and IAC Style}}
+%\subtitle{\shadowtext{The devops approach to monitoring, Open Source and Infrastructure as Code Style}}
 
 \author[Julien Pivotto]{\shadowtext{Julien Pivotto}}
 %\institute[Inuits]{Inuits}
-\date{\shadowtext{DrupalCon Prague}\\\inuits{September 26, 2013}}
-\logo{\includegraphics[height=1cm]{files/logo-prague.png}}
+\date{\shadowtext{Open World Forum}\\\inuits{October 4, 2013}}
+\logo{\includegraphics[height=1.5cm]{files/owf.png}}
 
 \frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
-%\frame{\tableofcontents}
-\begin{frame}
-\frametitle{MediaMosa}
-    \begin{center}
-        \includegraphics[height=3cm]{files/mediamosa.png}\\
-    \end{center}
-\begin{itemize}
-\xitem{Drupal-based Digital Asset Management system}
-\xitem{Open-source}
-\xitem{Store assets}
-\xitem{Trancode videos}
-\item{\shadowtext{Create, extract and manage metadata using open standards:}\\
-\shadowtext{Dublin Core, Qualified DC, IEEE/LOM, CZP}}
-\xitem{Webservice oriented}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{MediaSalsa}
-    \begin{center}
-        \includegraphics[height=2cm]{files/mediasalsa.png}\\
-        \Huge{\shadowtext{$=$}}\\
-        \Huge{\shadowtext{MediaMosa as a Service}}
-    \end{center}
-\end{frame}
-\begin{frame}
-\frametitle{MediaSalsa infrastructure (simplified)}
-\RelatedText{\}}{%
-\begin{itemize}
-\xitem{Backend: Core service (MediaMosa)}
-\xitem{Frontends: Optional}
-\xitem{Web servers}
-\xitem{Database server}
-\xitem{Solr server}
-\xitem{Transcoding servers}
-\end{itemize}
-}{\shadowtext{for each environment}}
-\end{frame}
-%\section{Culture}
 \frame{%
-\begin{center}
-\Huge{\color{inuits}Culture}\\
-\LARGE{\color{grey}Automation}\\
-\LARGE{\color{grey}Measurement}\\
-\LARGE{\color{grey}Sharing}
-\end{center}
+    \begin{center}\begin{Huge}{\inuits{whoami}}\end{Huge}\end{center}
+    \begin{large}
+    \begin{itemize}
+        \xitem{sysadmin @ inuits}
+        \xitem{open-source defender for 7+ years}
+        \xitem{devops believer}
+        \xitem{@roidelapluie on twitter/github}
+    \end{itemize}
+    \end{large}
 }
-%\subsection{Our company}
+
 \begin{frame}
-\frametitle{Inuits}
-\begin{itemize}
+
+\frametitle{DevOps}
+    \begin{columns}[T]
+        \begin{column}{.5\textwidth}
+            \begin{LARGE}
+                \begin{itemize}
+                    \xitem{Culture}
+                    \xitem{Automation}
+                    \xitem{Measurement}
+                    \xitem{Sharing}
+                \end{itemize}
+            \end{LARGE}
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \includegraphics[height=3cm]{files/devops.png}
+%            \vspace{1cm}
+            \begin{flushright}\textit{\inuits{Damon Edwards and John Willis}}\end{flushright}
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Huge \st{Monitoring is usually}\\\st{an afterthought}
+\end{center}
+\begin{flushright}
+\st{\textit{\color{inuits}ENOTIME, ENOBUDGET}}
+\end{flushright}
+\end{frame}
+
+\begin{frame}
+\frametitle{\#monitoringsucks}
 \LARGE
-\xitem{Inuits is an {\color{inuits}Open-Source} company}
 \begin{itemize}
-\LARGE
-\item[$\Rightarrow$]{\shadowtext{We contribute back}}
-\end{itemize}
-\xitem{$\pm$ 40 people in 3 countries}
-\xitem{One language: English}
+\xitem{A movement started in 2011}
+\xitem{http://github.com/monitoringsucks}
+\xitem{A lot of tools and information}
 \end{itemize}
 \end{frame}
+
 \begin{frame}
-\frametitle{Inuits}
-\begin{center}
+\frametitle{Goals}
+\begin{itemize}
 \large
-What do we do?
-\end{center}
-\begin{itemize}
+\xitem{Find when a service is unavailable}
+\xitem{Understand failure post-mortem}\pause
+\xitem{\color{green}Learn from your infrastructure}
+\xitem{\color{green}Anticipate}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Monitor everything}
 \LARGE
-\xitem{Consulting {\color{inuits}and} Internal projects}
-\xitem{Development {\color{inuits}and} System administration}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Inuits}
-\begin{center}
-\LARGE
-\shadowtext{Ideal world {\color{red}vs} budget and reality}\\
-\LARGE
-\shadowtext{$\Rightarrow$ pragmatic approach}
-\end{center}
-\end{frame}
-%\subsection{The teams}
-\begin{frame}
-\frametitle{Distributed team}
-\begin{center}
-\Huge{Communication $=$ \color{red}hell}\\
-%find a nice picture
-\vspace{0.7cm}
-\LARGE How to fix it?
-\end{center}
 \begin{itemize}
-\xitem{Daily virtual stand-up over XMPP/Hangout}
-\xitem{Redmine project managment}
-\begin{itemize}
-\xitem{Tasks}
-\xitem{Repositories}
-\xitem{Documentation (wiki)}
-\end{itemize}
-\xitem{Internal mailing lists}
-\xitem{Jenkins notifications by mail and XMPP}
-\xitem{Internal training}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Dev and Ops}
-\begin{columns}[t]
-\column{.5\textwidth}
-\center{\Huge \shadowtext{Dev}}\\
-\begin{itemize}
-\xitem{Develop new features}
-\xitem{Write tests}
-\end{itemize}
-\column{.5\textwidth}
-\center{\Huge \shadowtext{Ops}}\\
-\begin{itemize}
-\xitem{Infrastructure (puppet)}
-\xitem{CD and CI (jenkins)}
-\end{itemize}
-\end{columns}
-\begin{center}
-\shadowtext{Ops teach dev to think about {\color{inuits}monitoring} and {\color{inuits}distributed service}}\\
-\shadowtext{Dev teach to ops about required libraries and tests}
-\end{center}
-\end{frame}
-
-
-
-
-%\section{Automation}
-\frame{%
-\begin{center}
-\LARGE{\color{grey}Culture}\\
-\Huge{\color{inuits}Automation}\\
-\LARGE{\color{grey}Measurement}\\
-\LARGE{\color{grey}Sharing}
-\end{center}
-}
-%\subsection{Puppet}
-\begin{frame}
-\frametitle{Puppet}
-\begin{center}
-\LARGE {\color{inuits}Puppet} automates {\color{inuits} all the things}\\
-\vspace{1cm}
-\large {$\Rightarrow$\hspace{0.3cm}\color{inuits}mcollective} orchestrates {\color{inuits} all the things}
-\end{center}
-\end{frame}
-\begin{frame}
-\frametitle{CD}
-\begin{center}
-\large
-\shadowtext{Continuous Delivery {\color{red}vs} Continuous Deployment}
-\end{center}
-\begin{itemize}
-\xitem{Puppet code}
-\begin{itemize}
-\xitem{Deployed to dev environment}
-\xitem{Same puppet code for each environment}
-\xitem{User-triggered deployments to UAT and prod}
-\xitem{Feature flags in Puppet code per environment}
-\end{itemize}
-\xitem{Application code}
-\begin{itemize}
-\xitem{Continuous integration in dev}
-\xitem{User-triggered deployments to UAT}
-\xitem{Deployment to prod is a business decision}
-\end{itemize}
-\end{itemize}
-\end{frame}
-%\subsection{Jenkins}
-\begin{frame}
-\frametitle{Tests}
-\begin{center}
-\LARGE{Developers test a lot}
-\end{center}
-\begin{itemize}
-\item[\dots]{\shadowtext{The tests don't work}}
-\item[\dots]{\shadowtext{It works on my machine}}
-\item[\dots]{\shadowtext{Wrong platform}}
-\item[\dots]{\shadowtext{Wrong PHP version}}
-\item[$\Rightarrow$]{\large\shadowtext{\color{green}Fixed now, thanks to Jenkins!}}
-\end{itemize}
-%\begin{right}
-\end{frame}
-%\begin{frame}
-%\frametitle{Environments}
-%\RelatedText{\}}{%
-%\begin{itemize}
-%\xitem{Development}
-%\xitem{UAT}
-%\xitem{Prod}
-%\begin{itemize}
-%\xitem{.ac}
-%\xitem{.com}
-%\xitem{dedicated}
-%\end{itemize}
-%\end{itemize}}{\shadowtext{$\neq$ versions}}
-%\end{frame}
-\begin{frame}
-\frametitle{SCM}
-\begin{center}
-{\huge
-\shadowtext{Code is under revision control (git)}
-}
-\large
-\begin{itemize}
-\xitem{Prefer small commits}
-\xitem{Local features branches}
-\xitem{Packages}
-\end{itemize}
-\end{center}
-\end{frame}
-\begin{frame}
-\frametitle{Using OS packaging system}
-\begin{itemize}
-\xitem{Consistency, security, dependencies}
-\xitem{Uniquely identify where files are coming from}
-\xitem{Source repo may not be reacheable}
-\xitem{Little overhead when you automate}
-\xitem{\color{red}Configuration does not belong to a package}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Pipelines}
-\begin{itemize}
-\xitem{A collection of jobs}
-\xitem{Run one after another}
-\xitem{Start on checkout, end on deployment}
-\xitem{From the developers' side:}
-\begin{itemize}
-\item[$\Rightarrow$]{\shadowtext{Git push}}
-\item[$\Leftarrow$]{\shadowtext{Mail with changes + link to deploy}}
-\end{itemize}
-\end{itemize}
-\end{frame}
-\begin{frame}[fragile]
-\frametitle{Our pipelines}
-\begin{itemize}
-\xitem{Puppetized}
-\xitem{Puppet code and Application code (backend and frontends)}
-\xitem{1 pipeline/project/customer}
-\vspace{0.5cm}
-\begin{block}{Defining a pipeline}
-\footnotesize
-\texttt{salsajobs::pipeline::frontend~\{}\\
-\texttt{~'qwerty-inc':}\\
-\texttt{~~git\_repository~=>~'ssh://git@redmine/qwerty.git',}\\
-\texttt{~~dashboard\_view~=>~'mds-frontends',}\\
-\texttt{~~target\_urls~~~~=>~\{}\\
-\texttt{~~~~'uat'~~~~~~~~=>~'http://qwerty.uat.mediasalsa.eu',}\\
-\texttt{~~~~'prod'~~~~~~~=>~'http://qwerty.mediasalsa.eu',}\\
-\texttt{~~\},}\\
-\texttt{~~require~~~~~~~~=>~Salsajobs::Views::Dashboard['mds-frontends'],}\\
-\texttt{\}}
-\end{block}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Pipelines steps}
-    \begin{center}
-        \includegraphics[width=10cm]{files/pipeline-drupalcon.png}\\
-    \end{center}
-\begin{itemize}
-\xitem{Checkout}
-\xitem{Syntax: \texttt{php -l}}
-\xitem{Style: Drupal Coder}
-\xitem{Package: FPM}
-\xitem{Deploy to dev environment: Mco}
-\xitem{Tests in dev environment: \texttt{drush run-tests}}
-\xitem{Publish package and promote: Mco}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Promotion}
-    \begin{center}
-        \includegraphics[width=11cm]{files/promotion.png}\\
-    \end{center}
-\begin{itemize}
-\xitem{At the end of the pipeline}
-\xitem{Send a simple email}
-\begin{itemize}
-\xitem{A link to the promotion page}
-\xitem{The changelog}
-\end{itemize}
-\xitem{Promotion page contains one button per environment}
-\xitem{Must promote to UAT before Production}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Tools used with jenkins}
-\begin{itemize}
-%TODO: add drush php tests, etc
-\xitem{Pulp to manage RPM repositories}
-\xitem{Mcollective to update packages, run drush}
+\xitem{Servers}
+\xitem{Services}
+\xitem{Usage}
+\xitem{Hardware}
+\xitem{Software}
+\xitem{People}
 \end{itemize}
 \end{frame}
 
-
-
-
-
-
-
-
-
-%\section{Measurement}
-\frame{%
-\begin{center}
-\LARGE{\color{grey}Culture}\\
-\LARGE{\color{grey}Automation}\\
-\Huge{\color{inuits}Measurement}\\
-\LARGE{\color{grey}Sharing}
-\end{center}
-}
 \begin{frame}
-\frametitle{Logstash}
-\begin{center}
+\frametitle{Monitor everywhere}
+\begin{itemize}
 \huge
-Collect all the logs
-\end{center}
+\xitem{See performance changes in dev}
+\xitem{Repare before prod}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Metric}
 \begin{itemize}
-\xitem{Drupal logs}
-\xitem{Apache logs}
-\xitem{Deployment logs}
-\xitem{System logs}
-\item[$\Rightarrow$]{\color{green}\shadowtext{Logstash, ES, kibana, statsd, graphite}}
+\huge
+\xitem{Time + name + value = metric}
+\xitem{Can be anything}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Event}
+\begin{itemize}
+\huge
+\xitem{Time + fields = metric}
+\xitem{Logs become usable data}
+\xitem{Can be transformed into metrics}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Metrics + events}
+\begin{itemize}
+\xitem{Overview of your infrastructure}
+\xitem{Usage and state of the services}
+\xitem{Combine several metrics}
+\xitem{Extract business values}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Automation}
+\begin{itemize}
+\huge
+\xitem{Infrastructure as Code}
+\xitem{Automate everything}
+\item[$\Rightarrow$]{\shadowtext{One source of trust}}
 \end{itemize}
 \end{frame}
 \begin{frame}
+
+\frametitle{Deployment}
+\begin{itemize}
+\large
+\xitem{Definitions of a service includes monitoring}
+\xitem{Deployed $\Leftrightarrow$ monitored}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tools}
+\begin{itemize}
+\huge
+\xitem{No all-in-one tool}
+\xitem{No autodiscovery tool}
+\xitem{Text-based configuration}
+\xitem{Scalable}
+\item[$\Rightarrow$]{\shadowtext{The Unix philosphy}}
+\end{itemize}
+\end{frame}
+
+\frame{%
 \frametitle{Icinga}
-\begin{center}
-\huge
-Monitor everything
-\end{center}
-\begin{itemize}
-\xitem{"Basics"}
-\item[$+$]{\shadowtext{vhosts}}
-\item[$+$]{\shadowtext{databases}}
-\item[$+$]{\shadowtext{cronjobs}}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{Graphite + gdash}
-\begin{itemize}
-\xitem{Collectd}
-\xitem{Monitor platform usage}
-\xitem{FFmpeg usage}
-\xitem{Number of accounts (backend ID's)}
-\end{itemize}
-\end{frame}
-\begin{frame}
-\frametitle{FFmpeg}
 
-    \begin{center}
-        \includegraphics[height=8cm]{files/ffmpeg.png}\\
-    \end{center}
-\end{frame}
+    \begin{itemize}
+    \LARGE
+        \xitem{Fork of nagios}
+        \xitem{Large and vibrant community}
+        \xitem{Configuration compatible with nagios}
+        \xitem{User-friendly interface}
+        \xitem{Use Icinga Classic!}
+    \end{itemize}
+}
 
-\begin{frame}
-\frametitle{Managed assets}
-
-    \begin{center}
-        \includegraphics[height=8cm]{files/managed.png}\\
-    \end{center}
-\end{frame}
-
-\begin{frame}
-\frametitle{Number of backend ID's}
-
-    \begin{center}
-        \includegraphics[height=8cm]{files/graphite.png}\\
-    \end{center}
-\end{frame}
-
-
-
-
-
-
-%\section{Sharing}
 \frame{%
+\frametitle{Icinga}
+    \flushright{\tiny{\color{darkgrey}https://icinga.org}}
+    \begin{center}
+    \includegraphics[height=5cm]{files/Icinga_Classic_ServiceStatus.png}
+    \end{center}
+}
+
+\frame{%
+\frametitle{Sensu}
+\begin{itemize}
+\large
+\xitem{Flexibility}
+\xitem{Compatible with nagios plugins}
+\xitem{Connects to your source of trust}
+\xitem{Relies on RabbitMQ}
+\end{itemize}
+}
+
+\frame{%
+\frametitle{Graphite}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Graphing}
+        \xitem{Accept any metric}
+        \xitem{Store data in files (whisper)}
+        \xitem{A lot of helpers functions}
+        \xitem{Listen on UDP and TCP}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Send data to graphite}
+        \small{\shadowtext{echo "stats.sshd.login 1 \$(date +\%s)" | nc -u graphite.example.com 2003}}
+}
+\frame{%
+\frametitle{Graphite API}
+    \begin{center}
+    \includegraphics[height=5cm]{files/graphite-api.png}
+    \end{center}
+
+}
+
+\frame{%
+\frametitle{gdash}
+
+    \flushright{\tiny{\color{darkgrey}https://github.com/ripienaar/gdash}}
+    \begin{center}
+    \includegraphics[height=5cm]{files/gdash.png}
+    \end{center}
+
+}
+\frame{%
+\frametitle{giraffe}
+
+    \begin{center}
+    \includegraphics[width=11cm]{files/giraffe.png}\\
+    \large
+    Alternative to gdash
+    \end{center}
+
+}
+\frame{%
+\frametitle{Collectd}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Statistics collection daemon}
+        \xitem{{\color{inuits}A lot} of plugins available\ldots}
+        \xitem{Can send data to graphite}
+        \xitem{Simple configuration}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Collectd plugins}
+    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/juhansonin/3141561416/}}
+    \begin{center}
+        \includegraphics[height=4cm]{files/flickr_plugins.jpg}
+    \end{center}
+}
+\frame{%
+\frametitle{Collectd plugins}
+\begin{small}
 \begin{center}
-\LARGE{\color{grey}Culture}\\
-\LARGE{\color{grey}Automation}\\
-\LARGE{\color{grey}Measurement}\\
-\Huge{\color{inuits}Sharing}
+\shadowtext{AMQP Apache APC\_UPS Apple\_Sensors Ascent Battery BIND Carbon}\\
+\shadowtext{ConnTrack ContextSwitch CPU CPUFreq CSV cURL cURL-JSON cURL-XML}\\
+\shadowtext{DBI DF Disk DNS E-Mail Entropy Exec FileCount FSCache GenericJMX}\\
+\shadowtext{gmond HDDTemp Interface IPMI IPTables IPVS IRQ Java libvirt Load}\\
+\shadowtext{LogFile LPAR MadWifi MBMon memcachec memcached Memory Modbus}\\
+\shadowtext{Monitorus Multimeter MySQL NetApp Netlink Network NFS nginx}\\
+\shadowtext{Notify\_Desktop Notify\_Email NTPd NUT olsrd OneWire OpenVPN OpenVZ}\\
+\shadowtext{Oracle Perl Pinba Ping PostgreSQL PowerDNS Processes Protocols Python}\\
+\shadowtext{Redis RouterOS RRDCacheD RRDtool Sensors Serial SNMP Swap SysLog}\\
+\shadowtext{Table Tail Tape TCPConns TeamSpeak2 TED thermal TokyoTyrant UnixSock}\\
+\shadowtext{Uptime Users UUID Varnish vmem VServer Wireless XMMS}\\
+\shadowtext{Write\_Graphite Write\_HTTP Write\_MongoDB}\\
+\shadowtext{Write\_Redis Write\_Riemann ZFS\_ARC}
 \end{center}
+\end{small}
+}
+\frame{%
+\frametitle{Logstash}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Ship logs from any source}
+        \xitem{Filter them}
+        \xitem{Index them}
+        \xitem{Search them}
+        \xitem{Backed with elasticsearch}
+    \end{itemize}
+    \end{LARGE}
+
+}
+\frame{%
+\frametitle{Logstash}
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/logstash.png}\\
+    \end{center}
+}
+\frame{%
+\frametitle{Kibana}
+\begin{itemize}
+\xitem{Kibana is a web interface for Logstash/ES}
+\xitem{Kibana 1 was written in PHP}
+\xitem{Kibana 2 was written in Ruby}
+\xitem{Kibana 3 is written in AngularJS}
+\end{itemize}
+}
+\frame{%
+\frametitle{Kibana 3}
+\begin{itemize}
+\xitem{Everything happens in the browser}
+\xitem{The browser is connected to Elasticsearch}
+\xitem{You can save dashboards into ES}
+\xitem{You can write/template dashboards to files}
+\end{itemize}
+}
+\begin{frame}[fragile]
+\frametitle{Kibana queries}
+\begin{block}{Example of a kibana query}
+\large
+\begin{verbatim}
+@fields.syslog_program:"httpd" AND
+@fields.http_host:"test.example.com" AND
+@fields.response:"404"
+\end{verbatim}
+\end{block}
+\begin{itemize}
+\xitem Lucene query syntax
+\xitem Simple and effective
+\xitem Point \& click web interface
+\end{itemize}
+\end{frame}
+
+\frame{%
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/kibana3.png}\\
+    \end{center}
+}
+\frame{%
+    \begin{center}
+        \includegraphics[height=7.5cm]{files/kibana3b.png}\\
+    \end{center}
+}
+\frame{%
+\frametitle{Statsd}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Graphite friend}
+        \xitem{Stats aggregation}
+        \xitem{Simple counters}
+        \xitem{Flushes every XX seconds to graphite}
+        \xitem{UDP}
+    \end{itemize}
+    \end{LARGE}
+}
+\begin{frame}[fragile]
+\frametitle{Feeding statsd}
+        \LARGE
+\begin{verbatim}
+echo "stats.sshd.login:1|c" |
+nc -u statsd.example.com 8125
+\end{verbatim}
+\end{frame}
+\frame{%
+\frametitle{Toolchain example}
+    \begin{large}
+    \begin{itemize}
+        \xitem{Apache ships logs to rsyslog}
+        \xitem{Rsyslog ships logs to logstash}
+        \xitem{Logstash ships metrics to statsd}
+        \xitem{Statsd ships metrics to Graphite}
+        \xitem{Icinga query metric from graphite}
+        \xitem{https://github.com/etsy/nagios\_tools}
+    \end{itemize}
+    \end{large}
+}
+\frame{%
+\frametitle{Reusing Icinga/Nagios perfdata}
+    \begin{large}
+    \begin{itemize}
+        \xitem{Icinga performs various checks}
+        \xitem{Icinga sends perfdata to graphite}
+        \xitem{Graphite stores the data}
+        \xitem{Gdash serves them inside dashboards}
+        \xitem{https://github.com/roidelapluie/icinga-to-graphite}
+    \end{itemize}
+    \end{large}
+}
+\frame{%
+\frametitle{Sharing}
+\large
+\begin{itemize}
+\xitem{Build dashboard: dashing, teamdash}
+\xitem{Share with developers}
+\xitem{Share with managers}
+\end{itemize}
+}
+\frame{%
+\frametitle{Try them yourself}
+\center{%
+    \begin{large}
+    \shadowtext{https://github.com/KrisBuytaert/vagrant-graphite}\\
+    \end{large}
+}
 }
 \begin{frame}
-\frametitle{Sharing}
+\frametitle{Thank you}
 \begin{center}
 \LARGE
-\shadowtext{We have just {\color{inuits}\Huge{shared}} our experience\dots}\\
-\vspace{2cm}
 \shadowtext{Any question?}
 \end{center}
 \end{frame}
@@ -458,11 +457,11 @@ Monitor everything
         \end{column}
         \end{columns}
 }
-{%
-\usebackgroundtemplate{}
-\setbeamercolor{background canvas}{bg=}
-\includepdf{slides.pdf}
-}
+%{%
+%\usebackgroundtemplate{}
+%\setbeamercolor{background canvas}{bg=}
+%\includepdf{slides.pdf}
+%}
 
 
 
