@@ -119,11 +119,11 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Monitor everywhere}
+\frametitle{Monitor every environment}
 \begin{itemize}
 \huge
 \xitem{See performance changes in dev}
-\xitem{Repare before prod}
+\xitem{Fix them before it hits production}
 \end{itemize}
 \end{frame}
 
@@ -162,7 +162,7 @@
 \huge
 \xitem{Infrastructure as Code}
 \xitem{Automate everything}
-\item[$\Rightarrow$]{\shadowtext{One source of trust}}
+\item[$\Rightarrow$]{\shadowtext{One source of truth}}
 \end{itemize}
 \end{frame}
 \begin{frame}
@@ -219,49 +219,6 @@
 \end{itemize}
 }
 
-\frame{%
-\frametitle{Graphite}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Graphing}
-        \xitem{Accept any metric}
-        \xitem{Store data in files (whisper)}
-        \xitem{A lot of helpers functions}
-        \xitem{Listen on UDP and TCP}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Send data to graphite}
-        \small{\shadowtext{echo "stats.sshd.login 1 \$(date +\%s)" | nc -u graphite.example.com 2003}}
-}
-\frame{%
-\frametitle{Graphite API}
-    \begin{center}
-    \includegraphics[height=5cm]{files/graphite-api.png}
-    \end{center}
-
-}
-
-\frame{%
-\frametitle{gdash}
-
-    \flushright{\tiny{\color{darkgrey}https://github.com/ripienaar/gdash}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/gdash.png}
-    \end{center}
-
-}
-\frame{%
-\frametitle{giraffe}
-
-    \begin{center}
-    \includegraphics[width=11cm]{files/giraffe.png}\\
-    \large
-    Alternative to gdash
-    \end{center}
-
-}
 \frame{%
 \frametitle{Collectd}
     \begin{LARGE}
@@ -320,6 +277,71 @@
     \end{center}
 }
 \frame{%
+\frametitle{Graphite}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Graphing}
+        \xitem{Accept any metric}
+        \xitem{Store data in files (whisper)}
+        \xitem{A lot of helpers functions}
+        \xitem{Listen on UDP and TCP}
+    \end{itemize}
+    \end{LARGE}
+}
+\frame{%
+\frametitle{Send data to graphite}
+        \small{\shadowtext{echo "stats.sshd.login 1 \$(date +\%s)" | nc -u graphite.example.com 2003}}
+}
+\frame{%
+\frametitle{Graphite API}
+    \begin{center}
+    \includegraphics[height=5cm]{files/graphite-api.png}
+    \end{center}
+
+}
+
+
+\frame{%
+\frametitle{Statsd}
+    \begin{LARGE}
+    \begin{itemize}
+        \xitem{Graphite friend}
+        \xitem{Stats aggregation}
+        \xitem{Simple counters}
+        \xitem{Flushes every XX seconds to graphite}
+        \xitem{UDP}
+    \end{itemize}
+    \end{LARGE}
+}
+\begin{frame}[fragile]
+\frametitle{Feeding statsd}
+        \LARGE
+\begin{verbatim}
+echo "stats.sshd.login:1|c" |
+nc -u statsd.example.com 8125
+\end{verbatim}
+\end{frame}
+
+\frame{%
+\frametitle{gdash}
+
+    \flushright{\tiny{\color{darkgrey}https://github.com/ripienaar/gdash}}
+    \begin{center}
+    \includegraphics[height=5cm]{files/gdash.png}
+    \end{center}
+
+}
+\frame{%
+\frametitle{giraffe}
+
+    \begin{center}
+    \includegraphics[width=11cm]{files/giraffe.png}\\
+    \large
+    Alternative to gdash
+    \end{center}
+
+}
+\frame{%
 \frametitle{Kibana}
 \begin{itemize}
 \xitem{Kibana is a web interface for Logstash/ES}
@@ -364,26 +386,6 @@
         \includegraphics[height=7.5cm]{files/kibana3b.png}\\
     \end{center}
 }
-\frame{%
-\frametitle{Statsd}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Graphite friend}
-        \xitem{Stats aggregation}
-        \xitem{Simple counters}
-        \xitem{Flushes every XX seconds to graphite}
-        \xitem{UDP}
-    \end{itemize}
-    \end{LARGE}
-}
-\begin{frame}[fragile]
-\frametitle{Feeding statsd}
-        \LARGE
-\begin{verbatim}
-echo "stats.sshd.login:1|c" |
-nc -u statsd.example.com 8125
-\end{verbatim}
-\end{frame}
 \frame{%
 \frametitle{Toolchain example}
     \begin{large}
