@@ -18,6 +18,7 @@
 \newcommand{\st}[1]{\shadowtext{#1}}
 \newcommand{\inuits}[1]{\shadowtext{\color{inuits}#1}}
 \renewcommand{\frametitle}[1]{\begin{center}\Huge\inuits{#1}\end{center}}
+\newcommand{\arr}{{\color{green}$\Rightarrow$}~}
 \newcommand{\RelatedText}[4][0.65\textwidth]{%
 \begin{math}%
   \left.% 
@@ -27,17 +28,17 @@
      \end{math}
     }%
 
-\newcommand{\ptitle}{The devops approach to monitoring, Open Source and IAC Style}
+\newcommand{\ptitle}{Deployment and Continuous integration of a Plone/Zope application}
 
 \begin{document}
 \setbeamercovered{invisible}
-\title[DevOps and monitoring]{\fontsize{20}{35}\selectfont \shadowtext{The devops approach to monitoring,}\\\shadowtext{Open Source and IAC Style}}
+\title[Deployment and CI of a Plone/Zope application]{\fontsize{20}{35}\selectfont \shadowtext{Deployment \& Continuous integration}\\\shadowtext{of a Plone/Zope application}}
 %\subtitle{\shadowtext{The devops approach to monitoring, Open Source and Infrastructure as Code Style}}
 
 \author[Julien Pivotto]{\shadowtext{Julien Pivotto}}
 %\institute[Inuits]{Inuits}
-\date{\shadowtext{Open World Forum}\\\inuits{October 4, 2013}}
-\logo{\includegraphics[height=1.5cm]{files/owf.png}}
+\date{\shadowtext{PyconFR'13}\\\inuits{October 26, 2013}}
+\logo{\includegraphics[height=1.5cm]{files/pycon.png}}
 
 \frame[plain,t]{\vspace{-1em} \centerline{\includegraphics[width=\paperwidth]{files/loup.jpg}}\titlepage}
 \frame{%
@@ -52,223 +53,280 @@
     \end{large}
 }
 
-\begin{frame}
 
-\frametitle{DevOps}
-    \begin{columns}[T]
-        \begin{column}{.5\textwidth}
-            \begin{LARGE}
-                \begin{itemize}
-                    \xitem{Culture}
-                    \xitem{Automation}
-                    \xitem{Measurement}
-                    \xitem{Sharing}
-                \end{itemize}
-            \end{LARGE}
-        \end{column}
-        \begin{column}{.5\textwidth}
-            \includegraphics[height=3cm]{files/devops.png}
-%            \vspace{1cm}
-            \begin{flushright}\textit{\inuits{Damon Edwards and John Willis}}\end{flushright}
-        \end{column}
-    \end{columns}
-
-\end{frame}
-
-\begin{frame}
-\begin{center}
-\Huge \st{Monitoring is usually}\\\st{an afterthought}
-\end{center}
-\begin{flushright}
-\st{\textit{\color{inuits}ENOTIME, ENOBUDGET}}
-\end{flushright}
-\end{frame}
-
-\begin{frame}
-\frametitle{\#monitoringsucks}
+\frame{%
+\center{%
+\includegraphics[height=2cm]{files/plone.png}\\
+}
 \LARGE
 \begin{itemize}
-\xitem{A movement started in 2011}
-\xitem{http://github.com/monitoringsucks}
-\xitem{A lot of tools and information}
+\xitem{Plone is an Open-Source CMS}
+\xitem{Written in python}
+\xitem{Vibrant community}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Goals}
-\begin{itemize}
-\large
-\xitem{Find when a service is unavailable}
-\xitem{Understand failure post-mortem}\pause
-\xitem{\color{green}Learn from your infrastructure}
-\xitem{\color{green}Anticipate}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Monitor everything}
+}
+\frame{%
+\center{%
+\includegraphics[height=2cm]{files/zope.png}\\
+}
 \LARGE
 \begin{itemize}
-\xitem{Servers}
-\xitem{Services}
-\xitem{Usage}
-\xitem{Hardware}
-\xitem{Software}
-\xitem{People}
+\xitem{Open-Source Web application server}
+\xitem{Written in Python}
+\xitem{Used by Plone}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Monitor every environment}
-\begin{itemize}
+}
+\frame{%
+\frametitle{Plone/Zope application}
 \huge
-\xitem{See performance changes in dev}
-\xitem{Fix them before it hits production}
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Metric}
 \begin{itemize}
-\huge
-\xitem{Time + name + value = metric}
-\xitem{Can be anything}
+\xitem{Threads = instances}
+\xitem{Built using Buildout}
+\xitem{Modules (eggs)}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Event}
+}
+\frame{%
+\frametitle{The mission}
+\LARGE
 \begin{itemize}
-\huge
-\xitem{Time + fields = metric}
-\xitem{Logs become usable data}
-\xitem{Can be transformed into metrics}
+\xitem{Several Zope/Plone applications}
+\xitem{Scalability}
+\xitem{Automation}
+\xitem{Reliability}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Metrics + events}
+}
+\frame{%
+\frametitle{The old days}
+\LARGE
 \begin{itemize}
-\xitem{Overview of your infrastructure}
-\xitem{Usage and state of the services}
-\xitem{Combine several metrics}
-\xitem{Extract business values}
+\xitem{Manual work}
+\xitem{Failover HA}
+\xitem{Supervisord}
+\xitem{No overview}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Automation}
-\begin{itemize}
-\huge
-\xitem{Infrastructure as Code}
-\xitem{Automate everything}
-\item[$\Rightarrow$]{\shadowtext{One source of truth}}
-\end{itemize}
-\end{frame}
-\begin{frame}
-
-\frametitle{Deployment}
-\begin{itemize}
+}
+\frame{%
+\frametitle{\color{red}BUT}
 \large
-\xitem{Definitions of a service includes monitoring}
-\xitem{Deployed $\Leftrightarrow$ monitored}
+\begin{itemize}
+\xitem{Run buildout on each server/environment}
+\xitem{Compilation error in the middle}
+\xitem{Pypi is down}
+\xitem{Which commit is faulty?}
 \end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Tools}
+}
+\frame{%
+\frametitle{The goal}
 \begin{itemize}
 \huge
-\xitem{No all-in-one tool}
-\xitem{No autodiscovery tool}
-\xitem{Text-based configuration}
-\xitem{Scalable}
-\item[$\Rightarrow$]{\shadowtext{The Unix philosphy}}
+\xitem{Less failure during builds}
+\xitem{More testing}
+\xitem{Puppetize all the things}
+\xitem{Reproduce all the builds}
+\xitem{More env: dev, test, demo, prod}
 \end{itemize}
-\end{frame}
-
-\frame{%
-\frametitle{Icinga}
-
-    \begin{itemize}
-    \LARGE
-        \xitem{Fork of nagios}
-        \xitem{Large and vibrant community}
-        \xitem{Configuration compatible with nagios}
-        \xitem{User-friendly interface}
-        \xitem{Use Icinga Classic!}
-    \end{itemize}
 }
-
 \frame{%
-\frametitle{Icinga}
-    \flushright{\tiny{\color{darkgrey}https://icinga.org}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/Icinga_Classic_ServiceStatus.png}
-    \end{center}
-}
-
-\frame{%
-\frametitle{Sensu}
+\frametitle{Infrastructure changes}
 \begin{itemize}
-\large
-\xitem{Flexibility}
-\xitem{Compatible with nagios plugins}
-\xitem{Connects to your source of trust}
-\xitem{Relies on RabbitMQ}
+\xitem{DRBD for PostgreSQL \arr PostgreSQL 9 native replication}
+\xitem{DRBD for files \arr GlusterFS for data, RPM for code}
+\xitem{Supervisord to launch instances \arr Puppet to start services}
+\xitem{Pound as reverse proxy \arr Haproxy}
+\xitem{Internal mirror of pypi}
 \end{itemize}
 }
-
 \frame{%
-\frametitle{Collectd}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Statistics collection daemon}
-        \xitem{{\color{inuits}A lot} of plugins available\ldots}
-        \xitem{Can send data to graphite}
-        \xitem{Simple configuration}
-    \end{itemize}
-    \end{LARGE}
+\frametitle{Puppetization}
+\LARGE
+\begin{itemize}
+\xitem{From nothing to everything}
+\xitem{Plone, but also apache, haproxy}
+\xitem{\dots and anything else}
+\xitem{Mcollective to orchestrate}
+\end{itemize}
 }
 \frame{%
-\frametitle{Collectd plugins}
-    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/juhansonin/3141561416/}}
+\frametitle{Development decisions}
+\begin{itemize}
+\huge
+\xitem{Move away from SVN}
+\xitem{Write tests}
+\xitem{Automate them in Jenkins}
+\end{itemize}
+}
+\frame{%
+\frametitle{It takes time}
+\LARGE
+\begin{itemize}
+\xitem{Cultural shift}
+\xitem{Legacy stuff}
+\xitem{A lot of surprises}
+\xitem{Compromises between Dev and Ops}
+\end{itemize}
+}
+\frame{%
+\frametitle{Jenkins}
+\center{%
+\includegraphics[height=2cm]{files/jenkins-logo.png}\\
+}
+\LARGE
+\begin{itemize}
+\xitem{An open-source CI server}
+\xitem{More than 600 plugins}
+\xitem{Flexible}
+\xitem{Jobs \& pipelines}
+\end{itemize}
+}
+\frame{%
+\centerline{%
+        \includegraphics[width=\paperwidth]{files/jenkins.png}
+}
+}
+\frame{%
+\frametitle{Jobs}
+\begin{itemize}
+\huge
+\xitem{Reproducible builds}
+\xitem{Single place to find build logs}
+\xitem{History of builds}
+\xitem{Creating (RPM) artifacts}
+\end{itemize}
+}
+\frame{%
+\frametitle{Pipeline}
+\begin{itemize}
+\huge
+\xitem{Build is only part of the process}
+\xitem{Need to package, deploy, \dots}
+\xitem{Running tests}
+\end{itemize}
+}
+\frame{%
+\frametitle{Tests}
+\LARGE
+\begin{itemize}
+\xitem{Running tests on each module}
+\xitem{Feedback: graphes, mails}
+\xitem{Code coverage}
+\xitem{Violations}
+\xitem{Unit tests}
+\xitem{zc.recipe.testrunner}
+\end{itemize}
+}
+\begin{frame}[fragile]
+\frametitle{Translation in Jobs}
+\begin{verbatim}
+virtualenv --no-site-packages .
+bin/python bootstrap.py
+bin/buildout -c jenkins.cfg buildout:eggs-directory=
+               /var/lib/jenkins/buildout-shared-eggs
+bin/test-all
+\end{verbatim}
+\end{frame}
+\frame{%
     \begin{center}
-        \includegraphics[height=4cm]{files/flickr_plugins.jpg}
+    \includegraphics[height=8cm]{files/tests.png}
     \end{center}
 }
 \frame{%
-\frametitle{Collectd plugins}
-\begin{small}
-\begin{center}
-\shadowtext{AMQP Apache APC\_UPS Apple\_Sensors Ascent Battery BIND Carbon}\\
-\shadowtext{ConnTrack ContextSwitch CPU CPUFreq CSV cURL cURL-JSON cURL-XML}\\
-\shadowtext{DBI DF Disk DNS E-Mail Entropy Exec FileCount FSCache GenericJMX}\\
-\shadowtext{gmond HDDTemp Interface IPMI IPTables IPVS IRQ Java libvirt Load}\\
-\shadowtext{LogFile LPAR MadWifi MBMon memcachec memcached Memory Modbus}\\
-\shadowtext{Monitorus Multimeter MySQL NetApp Netlink Network NFS nginx}\\
-\shadowtext{Notify\_Desktop Notify\_Email NTPd NUT olsrd OneWire OpenVPN OpenVZ}\\
-\shadowtext{Oracle Perl Pinba Ping PostgreSQL PowerDNS Processes Protocols Python}\\
-\shadowtext{Redis RouterOS RRDCacheD RRDtool Sensors Serial SNMP Swap SysLog}\\
-\shadowtext{Table Tail Tape TCPConns TeamSpeak2 TED thermal TokyoTyrant UnixSock}\\
-\shadowtext{Uptime Users UUID Varnish vmem VServer Wireless XMMS}\\
-\shadowtext{Write\_Graphite Write\_HTTP Write\_MongoDB}\\
-\shadowtext{Write\_Redis Write\_Riemann ZFS\_ARC}
-\end{center}
-\end{small}
+\frametitle{Buildout}
+\LARGE
+\begin{itemize}
+\xitem{Running buildout in a Spec file}
+\xitem{Creating a RPM}
+\xitem{Using virtualenv}
+\xitem{Starting from scratch each time}
+\end{itemize}
+}
+\frame{%
+\frametitle{Ops like RPM}
+\LARGE
+\begin{itemize}
+\xitem{Easy to deploy anywhere}
+\xitem{Consistency and dependencies}
+\xitem{Find where a file comes from}
+\xitem{Orchestrate with puppet/mcollective}
+\xitem{Version number}
+\xitem{\color{red}Conf does not belong to package}
+\end{itemize}
+}
+\frame{%
+\frametitle{Time}
+    \begin{center}
+    \includegraphics[height=5cm]{files/xkcd-buildout.png}
+    \end{center}
+}
+\frame{%
+\frametitle{Deploying Zope}
+\LARGE
+\begin{itemize}
+\xitem{Building RPM}
+\xitem{Adding them to a yum repo (with pulp)}
+\xitem{Cleaning yum cache (with mcollective)}
+\xitem{Running puppet (with mcollective)}
+\xitem{dev -> staging -> demo and prod}
+\end{itemize}
+}
+\frame{%
+\frametitle{Reports}
+\huge
+\begin{itemize}
+\xitem{Jenkins build log}
+\xitem{Puppet logs}
+\xitem{Zope instances logs}
+\xitem{IRC, mails, \dots}
+\end{itemize}
+}
+\frame{%
+\frametitle{Role of Puppet}
+\begin{itemize}
+\LARGE
+\xitem{Puppet creates the configuration}
+\xitem{Update the package}
+\xitem{Restarts the instances}
+\xitem{Puppet (hiera) creates password files}
+\end{itemize}
+}
+\frame{%
+\frametitle{Database upgrades}
+\begin{itemize}
+\huge
+\xitem{WIP, no solution chosen yet}
+\xitem{Postscript in RPM?}
+\xitem{Commands trigerred by puppet?}
+\end{itemize}
+}
+\frame{%
+\frametitle{Logs}
+\begin{itemize}
+\huge
+\xitem{Zope/Plone: logs files/instances}
+\xitem{10 instances * 2 servers}
+\item[$\Rightarrow$]{\shadowtext{20 log files}}
+\xitem{Plus apache logs}
+\xitem{Plus system logs}
+\end{itemize}
+}
+\frame{%
+\frametitle{The deprecated way}
+\huge
+\begin{itemize}
+\xitem{tail -f}
+\xitem{multitail}
+\xitem{clusterssh}
+\end{itemize}
 }
 \frame{%
 \frametitle{Logstash}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Ship logs from any source}
-        \xitem{Filter them}
-        \xitem{Index them}
-        \xitem{Search them}
-        \xitem{Backed with elasticsearch}
-    \end{itemize}
-    \end{LARGE}
-
+\huge
+\begin{itemize}
+\xitem{An open source tool}
+\xitem{Manage your logs}
+\xitem{Input from anywhere}
+\xitem{Filter}
+\xitem{Output to anywhere}
+\end{itemize}
 }
 \frame{%
 \frametitle{Logstash}
@@ -277,161 +335,487 @@
     \end{center}
 }
 \frame{%
-\frametitle{Graphite}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Graphing}
-        \xitem{Accept any metric}
-        \xitem{Store data in files (whisper)}
-        \xitem{A lot of helpers functions}
-        \xitem{Listen on UDP and TCP}
-    \end{itemize}
-    \end{LARGE}
-}
-\frame{%
-\frametitle{Send data to graphite}
-        \small{\shadowtext{echo "stats.sshd.login 1 \$(date +\%s)" | nc -u graphite.example.com 2003}}
-}
-\frame{%
-\frametitle{Graphite API}
-    \begin{center}
-    \includegraphics[height=5cm]{files/graphite-api.png}
-    \end{center}
-
-}
-
-
-\frame{%
-\frametitle{Statsd}
-    \begin{LARGE}
-    \begin{itemize}
-        \xitem{Graphite friend}
-        \xitem{Stats aggregation}
-        \xitem{Simple counters}
-        \xitem{Flushes every XX seconds to graphite}
-        \xitem{UDP}
-    \end{itemize}
-    \end{LARGE}
-}
-\begin{frame}[fragile]
-\frametitle{Feeding statsd}
-        \LARGE
-\begin{verbatim}
-echo "stats.sshd.login:1|c" |
-nc -u statsd.example.com 8125
-\end{verbatim}
-\end{frame}
-
-\frame{%
-\frametitle{gdash}
-
-    \flushright{\tiny{\color{darkgrey}https://github.com/ripienaar/gdash}}
-    \begin{center}
-    \includegraphics[height=5cm]{files/gdash.png}
-    \end{center}
-
-}
-\frame{%
-\frametitle{giraffe}
-
-    \begin{center}
-    \includegraphics[width=11cm]{files/giraffe.png}\\
-    \large
-    Alternative to gdash
-    \end{center}
-
-}
-\frame{%
-\frametitle{Kibana}
+\frametitle{Plone and Logstash}
+\LARGE
 \begin{itemize}
-\xitem{Kibana is a web interface for Logstash/ES}
-\xitem{Kibana 1 was written in PHP}
-\xitem{Kibana 2 was written in Ruby}
-\xitem{Kibana 3 is written in AngularJS}
-\end{itemize}
-}
-\frame{%
-\frametitle{Kibana 3}
-\begin{itemize}
-\xitem{Everything happens in the browser}
-\xitem{The browser is connected to Elasticsearch}
-\xitem{You can save dashboards into ES}
-\xitem{You can write/template dashboards to files}
+\xitem{Plone output to syslog}
+\xitem{Mangle to add good fields}
+\xitem{Logstash output to ElasticSearch}
+\xitem{Kibana3 creates dashboards}
 \end{itemize}
 }
 \begin{frame}[fragile]
-\frametitle{Kibana queries}
-\begin{block}{Example of a kibana query}
-\large
+\frametitle{zope.conf}
 \begin{verbatim}
-@fields.syslog_program:"httpd" AND
-@fields.http_host:"test.example.com" AND
-@fields.response:"404"
+<syslog>
+address 172.16.28.55:5544
+facility local3
+format %(asctime)s ZopApp-Server zope[%(process)s]:
+       instance1 [%(levelname)s] %(name)s | %(message)s
+dateformat %b %d %H:%M:%S
+level info
+</syslog>
 \end{verbatim}
-\end{block}
-\begin{itemize}
-\xitem Lucene query syntax
-\xitem Simple and effective
-\xitem Point \& click web interface
-\end{itemize}
 \end{frame}
 
-\frame{%
-    \begin{center}
-        \includegraphics[height=7.5cm]{files/kibana3.png}\\
-    \end{center}
+
+\begin{frame}[fragile]
+\begin{verbatim}
+filter {
+ grok {
+  type    => "syslog"
+   pattern => ["(?m)<%= "<%" %>{POSINT:syslog_pri}>
+    %{SYSLOGTIMESTAMP:syslog_timestamp}
+    %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}
+    (?:\[%{POSINT:syslog_pid}\])?:
+    %{GREEDYDATA:syslog_message}"]
+   add_field => [ "received_at", "%{@timestamp}" ]
+   add_field => [ "received_from", "%{@source_host}" ]
+   add_tag  => "syslog-%{syslog_program}"
+ }
 }
-\frame{%
-    \begin{center}
-        \includegraphics[height=7.5cm]{files/kibana3b.png}\\
-    \end{center}
+\end{verbatim}
+\end{frame}
+\begin{frame}[fragile]
+\begin{verbatim}
+\frametitle{zope.conf}
+filter {
+ grok {
+  tags    => ["syslog-zope"]
+  pattern => ["(?m)(?<instance>[a-z0-9]+)
+   \[(?<loglevel>[A-Z]+)\]
+   (?<loggername>[A-Za-z0-9.]+) \|
+   %{GREEDYDATA:logmessage}"]
+  add_tag => "grokked-zope"
+ }
+ mutate {
+  tags    => ["grokked-zope"]
+  rename => [ "@source_host", "application" ]
+  replace => [ "@message", "%{logmessage}" ]
+  add_tag => "loggername-%{loggername}"
+ }
 }
+\end{verbatim}
+\end{frame}
+
+
 \frame{%
-    \begin{center}
-        \includegraphics[height=7.5cm]{files/kibana-ex.png}\\
-    \end{center}
-}
-\frame{%
-\frametitle{Toolchain example}
-    \begin{large}
-    \begin{itemize}
-        \xitem{Apache ships logs to rsyslog}
-        \xitem{Rsyslog ships logs to logstash}
-        \xitem{Logstash ships metrics to statsd}
-        \xitem{Statsd ships metrics to Graphite}
-        \xitem{Icinga query metric from graphite}
-        \xitem{https://github.com/etsy/nagios\_tools}
-    \end{itemize}
-    \end{large}
-}
-\frame{%
-\frametitle{Reusing Icinga/Nagios perfdata}
-    \begin{large}
-    \begin{itemize}
-        \xitem{Icinga performs various checks}
-        \xitem{Icinga sends perfdata to graphite}
-        \xitem{Graphite stores the data}
-        \xitem{Gdash serves them inside dashboards}
-        \xitem{https://github.com/roidelapluie/icinga-to-graphite}
-    \end{itemize}
-    \end{large}
-}
-\frame{%
-\frametitle{Sharing}
-\large
+\frametitle{Kibana3}
 \begin{itemize}
-\xitem{Build dashboard: dashing, teamdash}
-\xitem{Share with developers}
-\xitem{Share with managers}
+\LARGE
+\xitem{Plays with ElasticSearch and Logstash}
+\xitem{Easily build dashboards}
+\xitem{Share the metric and logs with anyone}
+\xitem{Filter by time, instance, http code\dots}
+\xitem{View all the logs at the same place}
 \end{itemize}
 }
 \frame{%
-\frametitle{Try them yourself}
+\centerline{%
+        \includegraphics[width=\paperwidth]{files/kibana-ex.png}
+}
+}
+\frame{%
+\frametitle{Conclusions}
+\begin{itemize}
+\LARGE
+\xitem{This is a sysadmin point of view}
+\xitem{Still a lot of work to be done}
+\xitem{From a "black box"}
+\item[\dots]{\shadowtext{To a fully automated environment}}
+\xitem{Not a unique solution}
+\xitem{You need to get it working for you}
+\item[\dots]{\shadowtext{in your way}}
+\end{itemize}
+}
+%\begin{frame}
+%
+%\frametitle{DevOps}
+%    \begin{columns}[T]
+%        \begin{column}{.5\textwidth}
+%            \begin{LARGE}
+%                \begin{itemize}
+%                    \xitem{Culture}
+%                    \xitem{Automation}
+%                    \xitem{Measurement}
+%                    \xitem{Sharing}
+%                \end{itemize}
+%            \end{LARGE}
+%        \end{column}
+%        \begin{column}{.5\textwidth}
+%            \includegraphics[height=3cm]{files/devops.png}
+%%            \vspace{1cm}
+%            \begin{flushright}\textit{\inuits{Damon Edwards and John Willis}}\end{flushright}
+%        \end{column}
+%    \end{columns}
+%
+%\end{frame}
+%
+%\begin{frame}
+%\begin{center}
+%\Huge \st{Monitoring is usually}\\\st{an afterthought}
+%\end{center}
+%\begin{flushright}
+%\st{\textit{\color{inuits}ENOTIME, ENOBUDGET}}
+%\end{flushright}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{\#monitoringsucks}
+%\LARGE
+%\begin{itemize}
+%\xitem{A movement started in 2011}
+%\xitem{http://github.com/monitoringsucks}
+%\xitem{A lot of tools and information}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Goals}
+%\begin{itemize}
+%\large
+%\xitem{Find when a service is unavailable}
+%\xitem{Understand failure post-mortem}\pause
+%\xitem{\color{green}Learn from your infrastructure}
+%\xitem{\color{green}Anticipate}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Monitor everything}
+%\LARGE
+%\begin{itemize}
+%\xitem{Servers}
+%\xitem{Services}
+%\xitem{Usage}
+%\xitem{Hardware}
+%\xitem{Software}
+%\xitem{People}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Monitor every environment}
+%\begin{itemize}
+%\huge
+%\xitem{See performance changes in dev}
+%\xitem{Fix them before it hits production}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Metric}
+%\begin{itemize}
+%\huge
+%\xitem{Time + name + value = metric}
+%\xitem{Can be anything}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Event}
+%\begin{itemize}
+%\huge
+%\xitem{Time + fields = metric}
+%\xitem{Logs become usable data}
+%\xitem{Can be transformed into metrics}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Metrics + events}
+%\begin{itemize}
+%\xitem{Overview of your infrastructure}
+%\xitem{Usage and state of the services}
+%\xitem{Combine several metrics}
+%\xitem{Extract business values}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Automation}
+%\begin{itemize}
+%\huge
+%\xitem{Infrastructure as Code}
+%\xitem{Automate everything}
+%\item[$\Rightarrow$]{\shadowtext{One source of truth}}
+%\end{itemize}
+%\end{frame}
+%\begin{frame}
+%
+%\frametitle{Deployment}
+%\begin{itemize}
+%\large
+%\xitem{Definitions of a service includes monitoring}
+%\xitem{Deployed $\Leftrightarrow$ monitored}
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Tools}
+%\begin{itemize}
+%\huge
+%\xitem{No all-in-one tool}
+%\xitem{No autodiscovery tool}
+%\xitem{Text-based configuration}
+%\xitem{Scalable}
+%\item[$\Rightarrow$]{\shadowtext{The Unix philosphy}}
+%\end{itemize}
+%\end{frame}
+%
+%\frame{%
+%\frametitle{Icinga}
+%
+%    \begin{itemize}
+%    \LARGE
+%        \xitem{Fork of nagios}
+%        \xitem{Large and vibrant community}
+%        \xitem{Configuration compatible with nagios}
+%        \xitem{User-friendly interface}
+%        \xitem{Use Icinga Classic!}
+%    \end{itemize}
+%}
+%
+%\frame{%
+%\frametitle{Icinga}
+%    \flushright{\tiny{\color{darkgrey}https://icinga.org}}
+%    \begin{center}
+%    \includegraphics[height=5cm]{files/Icinga_Classic_ServiceStatus.png}
+%    \end{center}
+%}
+%
+%\frame{%
+%\frametitle{Sensu}
+%\begin{itemize}
+%\large
+%\xitem{Flexibility}
+%\xitem{Compatible with nagios plugins}
+%\xitem{Connects to your source of trust}
+%\xitem{Relies on RabbitMQ}
+%\end{itemize}
+%}
+%
+%\frame{%
+%\frametitle{Collectd}
+%    \begin{LARGE}
+%    \begin{itemize}
+%        \xitem{Statistics collection daemon}
+%        \xitem{{\color{inuits}A lot} of plugins available\ldots}
+%        \xitem{Can send data to graphite}
+%        \xitem{Simple configuration}
+%    \end{itemize}
+%    \end{LARGE}
+%}
+%\frame{%
+%\frametitle{Collectd plugins}
+%    \flushright{\tiny{\color{darkgrey}http://www.flickr.com/photos/juhansonin/3141561416/}}
+%    \begin{center}
+%        \includegraphics[height=4cm]{files/flickr_plugins.jpg}
+%    \end{center}
+%}
+%\frame{%
+%\frametitle{Collectd plugins}
+%\begin{small}
+%\begin{center}
+%\shadowtext{AMQP Apache APC\_UPS Apple\_Sensors Ascent Battery BIND Carbon}\\
+%\shadowtext{ConnTrack ContextSwitch CPU CPUFreq CSV cURL cURL-JSON cURL-XML}\\
+%\shadowtext{DBI DF Disk DNS E-Mail Entropy Exec FileCount FSCache GenericJMX}\\
+%\shadowtext{gmond HDDTemp Interface IPMI IPTables IPVS IRQ Java libvirt Load}\\
+%\shadowtext{LogFile LPAR MadWifi MBMon memcachec memcached Memory Modbus}\\
+%\shadowtext{Monitorus Multimeter MySQL NetApp Netlink Network NFS nginx}\\
+%\shadowtext{Notify\_Desktop Notify\_Email NTPd NUT olsrd OneWire OpenVPN OpenVZ}\\
+%\shadowtext{Oracle Perl Pinba Ping PostgreSQL PowerDNS Processes Protocols Python}\\
+%\shadowtext{Redis RouterOS RRDCacheD RRDtool Sensors Serial SNMP Swap SysLog}\\
+%\shadowtext{Table Tail Tape TCPConns TeamSpeak2 TED thermal TokyoTyrant UnixSock}\\
+%\shadowtext{Uptime Users UUID Varnish vmem VServer Wireless XMMS}\\
+%\shadowtext{Write\_Graphite Write\_HTTP Write\_MongoDB}\\
+%\shadowtext{Write\_Redis Write\_Riemann ZFS\_ARC}
+%\end{center}
+%\end{small}
+%}
+%\frame{%
+%\frametitle{Logstash}
+%    \begin{LARGE}
+%    \begin{itemize}
+%        \xitem{Ship logs from any source}
+%        \xitem{Filter them}
+%        \xitem{Index them}
+%        \xitem{Search them}
+%        \xitem{Backed with elasticsearch}
+%    \end{itemize}
+%    \end{LARGE}
+%
+%}
+%\frame{%
+%\frametitle{Logstash}
+%    \begin{center}
+%        \includegraphics[height=7.5cm]{files/logstash.png}\\
+%    \end{center}
+%}
+%\frame{%
+%\frametitle{Graphite}
+%    \begin{LARGE}
+%    \begin{itemize}
+%        \xitem{Graphing}
+%        \xitem{Accept any metric}
+%        \xitem{Store data in files (whisper)}
+%        \xitem{A lot of helpers functions}
+%        \xitem{Listen on UDP and TCP}
+%    \end{itemize}
+%    \end{LARGE}
+%}
+%\frame{%
+%\frametitle{Send data to graphite}
+%        \small{\shadowtext{echo "stats.sshd.login 1 \$(date +\%s)" | nc -u graphite.example.com 2003}}
+%}
+%\frame{%
+%\frametitle{Graphite API}
+%    \begin{center}
+%    \includegraphics[height=5cm]{files/graphite-api.png}
+%    \end{center}
+%
+%}
+%
+%
+%\frame{%
+%\frametitle{Statsd}
+%    \begin{LARGE}
+%    \begin{itemize}
+%        \xitem{Graphite friend}
+%        \xitem{Stats aggregation}
+%        \xitem{Simple counters}
+%        \xitem{Flushes every XX seconds to graphite}
+%        \xitem{UDP}
+%    \end{itemize}
+%    \end{LARGE}
+%}
+%\begin{frame}[fragile]
+%\frametitle{Feeding statsd}
+%        \LARGE
+%\begin{verbatim}
+%echo "stats.sshd.login:1|c" |
+%nc -u statsd.example.com 8125
+%\end{verbatim}
+%\end{frame}
+%
+%\frame{%
+%\frametitle{gdash}
+%
+%    \flushright{\tiny{\color{darkgrey}https://github.com/ripienaar/gdash}}
+%    \begin{center}
+%    \includegraphics[height=5cm]{files/gdash.png}
+%    \end{center}
+%
+%}
+%\frame{%
+%\frametitle{giraffe}
+%
+%    \begin{center}
+%    \includegraphics[width=11cm]{files/giraffe.png}\\
+%    \large
+%    Alternative to gdash
+%    \end{center}
+%
+%}
+%\frame{%
+%\frametitle{Kibana}
+%\begin{itemize}
+%\xitem{Kibana is a web interface for Logstash/ES}
+%\xitem{Kibana 1 was written in PHP}
+%\xitem{Kibana 2 was written in Ruby}
+%\xitem{Kibana 3 is written in AngularJS}
+%\end{itemize}
+%}
+%\frame{%
+%\frametitle{Kibana 3}
+%\begin{itemize}
+%\xitem{Everything happens in the browser}
+%\xitem{The browser is connected to Elasticsearch}
+%\xitem{You can save dashboards into ES}
+%\xitem{You can write/template dashboards to files}
+%\end{itemize}
+%}
+%\begin{frame}[fragile]
+%\frametitle{Kibana queries}
+%\begin{block}{Example of a kibana query}
+%\large
+%\begin{verbatim}
+%@fields.syslog_program:"httpd" AND
+%@fields.http_host:"test.example.com" AND
+%@fields.response:"404"
+%\end{verbatim}
+%\end{block}
+%\begin{itemize}
+%\xitem Lucene query syntax
+%\xitem Simple and effective
+%\xitem Point \& click web interface
+%\end{itemize}
+%\end{frame}
+%
+%\frame{%
+%    \begin{center}
+%        \includegraphics[height=7.5cm]{files/kibana3.png}\\
+%    \end{center}
+%}
+%\frame{%
+%    \begin{center}
+%        \includegraphics[height=7.5cm]{files/kibana3b.png}\\
+%    \end{center}
+%}
+%\frame{%
+%    \begin{center}
+%        \includegraphics[height=7.5cm]{files/kibana-ex.png}\\
+%    \end{center}
+%}
+%\frame{%
+%\frametitle{Toolchain example}
+%    \begin{large}
+%    \begin{itemize}
+%        \xitem{Apache ships logs to rsyslog}
+%        \xitem{Rsyslog ships logs to logstash}
+%        \xitem{Logstash ships metrics to statsd}
+%        \xitem{Statsd ships metrics to Graphite}
+%        \xitem{Icinga query metric from graphite}
+%        \xitem{https://github.com/etsy/nagios\_tools}
+%    \end{itemize}
+%    \end{large}
+%}
+%\frame{%
+%\frametitle{Reusing Icinga/Nagios perfdata}
+%    \begin{large}
+%    \begin{itemize}
+%        \xitem{Icinga performs various checks}
+%        \xitem{Icinga sends perfdata to graphite}
+%        \xitem{Graphite stores the data}
+%        \xitem{Gdash serves them inside dashboards}
+%        \xitem{https://github.com/roidelapluie/icinga-to-graphite}
+%    \end{itemize}
+%    \end{large}
+%}
+%\frame{%
+%\frametitle{Sharing}
+%\large
+%\begin{itemize}
+%\xitem{Build dashboard: dashing, teamdash}
+%\xitem{Share with developers}
+%\xitem{Share with managers}
+%\end{itemize}
+%}
+%\frame{%
+%\frametitle{Try them yourself}
+%\center{%
+%    \begin{large}
+%    \shadowtext{https://github.com/KrisBuytaert/vagrant-graphite}\\
+%    \end{large}
+%}
+%}
+\frame{%
 \center{%
-    \begin{large}
-    \shadowtext{https://github.com/KrisBuytaert/vagrant-graphite}\\
-    \end{large}
-}
+\includegraphics[height=2cm]{files/affinitic-logo.png}\\
+\shadowtext{This work is being realized with}\\
+\shadowtext{Affinitic SPRL, Plone developers in Belgium}\\
+\shadowtext{http://affinitic.be}}
+
 }
 \begin{frame}
 \frametitle{Thank you}
@@ -455,8 +839,6 @@ nc -u statsd.example.com 8125
     \begin{small}
     \includegraphics[height=2cm]{files/inuitslogo.png}\\
     \shadowtext{INUITS bvba}\\
-    \shadowtext{Duboisstraat 50}\\
-    \shadowtext{2060 Antwerp}\\
     \shadowtext{Belgium}\\
     \shadowtext{+32 473 441 636}\\
     \shadowtext{https://inuits.eu}
